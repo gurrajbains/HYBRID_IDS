@@ -1,4 +1,34 @@
-from scapy.all import sniff, IP, TCP, UDP, ICMP, rdpcap
+import time
+
+
+class SynFloodDetector:
+    def __init__(self, syn_threshold=50, time_window=10):
+        self.syn_threshold = syn_threshold
+        self.time_window = time_window
+        self.syn_history = {}
+
+    def check(self, src_ip, dst_ip):
+        current_time = time.time()
+        key = (src_ip, dst_ip)
+
+        if key not in self.syn_history:
+            self.syn_history[key] = []
+
+        self.syn_history[key].append(current_time)
+
+        recent_syns = []
+
+        for timestamp in self.syn_history[key]:
+            if current_time - timestamp <= self.time_window:
+                recent_syns.append(timestamp)
+
+        self.syn_history[key] = recent_syns
+
+        if len(recent_syns) >= self.syn_threshold:
+            return True
+
+        return False
+from scapy.all import sniff, IP, TCP, UDP, ICMP
 from datetime import datetime
 from src.detection.port_scan import PortScanDetector
 from src.alerts.alert_manager import create_alert
@@ -66,9 +96,14 @@ def capture_packets():
     print("Ctrl + C to stop process")
     sniff(iface="Realtek USB GbE Family Controller", prn=process_packet, store=False) 
 
-def analyze_pcap(file_path):
-    packets = rdpcap(file_path)
-    for packet in packets:
-        process_packet(packet)
 if __name__ == "__main__":
     capture_packets()
+if __name__ == "__main__":
+    detector = SynFloodDetector(syn_threshold=5, time_window=10)
+
+    test_ip = "192.168.1.50"
+    target_ip = "192.168.1.19"
+
+    for attempt in range(1, 6):
+        detected = detector.check(test_ip, target_ip)
+        print(f"SYN attempt {attempt} -> Alert: {detected}")
