@@ -5,12 +5,15 @@ from src.alerts.alert_manager import create_alert
 from src.detection.syn_flood import SynFloodDetector
 from src.detection.icmp_flood import IcmpFloodDetector
 from src.metrics.metrics_tracker import MetricsTracker
+from src.detection.ssh_brute_force import SSHBruteForceDetector
+
 import argparse
 
 
 port_scan_detector = PortScanDetector()
 syn_flood_detector = SynFloodDetector()
 icmp_flood_detector = IcmpFloodDetector()
+ssh_brute_force_detector = SSHBruteForceDetector()
 metrics_tracker = MetricsTracker()
 
 
@@ -61,6 +64,18 @@ def process_packet(packet):
 
                 metrics_tracker.record_alert("SYN Flood")
 
+            if ssh_brute_force_detector.check(src_ip, dst_ip, dst_port):
+                create_alert(
+                    "SSH Brute Force",
+                    "High",
+                    src_ip,
+                    dst_ip,
+                    f"Source attempted at least {ssh_brute_force_detector.attempt_threshold} SSH connections within {ssh_brute_force_detector.time_window} seconds",
+                    detector="SSHBruteForceDetector",
+                    protocol="TCP"
+                )
+
+                metrics_tracker.record_alert("SSH Brute Force")
     elif UDP in packet:
         protocol = "UDP"
         src_port = packet[UDP].sport
@@ -81,7 +96,7 @@ def process_packet(packet):
             )
 
             metrics_tracker.record_alert("ICMP Flood")
-
+    
     metrics_tracker.record_packet(protocol)
 
     print(
@@ -160,3 +175,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
