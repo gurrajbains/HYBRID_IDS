@@ -3,9 +3,11 @@ from datetime import datetime
 from src.detection.port_scan import PortScanDetector
 from src.alerts.alert_manager import create_alert
 from src.detection.syn_flood import SynFloodDetector
+from src.detection.icmp_flood import IcmpFloodDetector
 import argparse
 port_scan_detector = PortScanDetector()
 syn_flood_detector = SynFloodDetector()
+icmp_flood_detector = IcmpFloodDetector()
 def process_packet(packet):
 
     if IP not in packet:
@@ -51,9 +53,15 @@ def process_packet(packet):
 
     elif ICMP in packet:
         protocol = "ICMP"
-        #src_port = packet[ICMP].sport
-        #dst_port = packet[ICMP].dport
-        #flags = str(packet[ICMP].flags)
+
+        if icmp_flood_detector.check(src_ip, dst_ip):
+            create_alert(
+                "ICMP Flood",
+                "High",
+                src_ip,
+                dst_ip,
+                f"Source sent at least {icmp_flood_detector.icmp_threshold} ICMP packets within {icmp_flood_detector.time_window} seconds"
+            )
     print(
         f"[{timestamp}] "
         f"{protocol} | "
