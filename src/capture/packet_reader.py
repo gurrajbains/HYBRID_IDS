@@ -1,7 +1,9 @@
 from scapy.all import sniff, IP, TCP, UDP, ICMP
 from datetime import datetime
-
+from src.detection.port_scan import PortScanDetector
+port_scan_detector = PortScanDetector()
 def process_packet(packet):
+
     if IP not in packet:
         return
     
@@ -20,6 +22,9 @@ def process_packet(packet):
         src_port = packet[TCP].sport
         dst_port = packet[TCP].dport
         flags = str(packet[TCP].flags)
+        if flags == "S":
+            if port_scan_detector.check(src_ip, dst_ip, dst_port):
+                print(f"[ALERT] Possible port scan detected from {src_ip}")
     elif UDP in packet:
         protocol = "UDP"
         src_port = packet[UDP].sport
