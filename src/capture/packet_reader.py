@@ -35,7 +35,9 @@ def process_packet(packet):
                     "Medium",
                     src_ip,
                     dst_ip,
-                    f"Source contacted at least {port_scan_detector.port_threshold} unique ports within {port_scan_detector.time_window} seconds"
+                    f"Source contacted at least {port_scan_detector.port_threshold} unique ports within {port_scan_detector.time_window} seconds",
+                    detector = "PortScanDetector",
+                    protocol = "TCP"
                 )
             if syn_flood_detector.check(src_ip, dst_ip):
                 create_alert(
@@ -43,7 +45,9 @@ def process_packet(packet):
                     "High",
                     src_ip,
                     dst_ip,
-                    f"Source sent at least {syn_flood_detector.syn_threshold} SYN packets within {syn_flood_detector.time_window} seconds"
+                    f"Source sent at least {syn_flood_detector.syn_threshold} SYN packets within {syn_flood_detector.time_window} seconds",
+                    detector = "SynFloodDetector",
+                    protocol = "TCP"
                 )
     elif UDP in packet:
         protocol = "UDP"
@@ -60,7 +64,9 @@ def process_packet(packet):
                 "High",
                 src_ip,
                 dst_ip,
-                f"Source sent at least {icmp_flood_detector.icmp_threshold} ICMP packets within {icmp_flood_detector.time_window} seconds"
+                f"Source sent at least {icmp_flood_detector.icmp_threshold} ICMP packets within {icmp_flood_detector.time_window} seconds",
+                detector= "ICMPFloodDetector",
+                protocol= "ICMP"
             )
     print(
         f"[{timestamp}] "
