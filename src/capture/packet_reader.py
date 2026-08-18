@@ -86,18 +86,19 @@ def process_packet(packet):
     elif ICMP in packet:
         protocol = "ICMP"
 
-        if icmp_flood_detector.check(src_ip, dst_ip):
-            create_alert(
-                "ICMP Flood",
-                "High",
-                src_ip,
-                dst_ip,
-                f"Source sent at least {icmp_flood_detector.icmp_threshold} ICMP packets within {icmp_flood_detector.time_window} seconds",
-                detector="IcmpFloodDetector",
-                protocol="ICMP"
-            )
+        if packet[ICMP].type == 8:
+            if icmp_flood_detector.check(src_ip, dst_ip):
+                create_alert(
+                    "ICMP Flood",
+                    "High",
+                    src_ip,
+                    dst_ip,
+                    f"Source sent at least {icmp_flood_detector.icmp_threshold} ICMP Echo Requests within {icmp_flood_detector.time_window} seconds",
+                    detector="IcmpFloodDetector",
+                    protocol="ICMP"
+                )
 
-            metrics_tracker.record_alert("ICMP Flood")
+                metrics_tracker.record_alert("ICMP Flood")
     
     metrics_tracker.record_packet(protocol)
     process_completed_flows()

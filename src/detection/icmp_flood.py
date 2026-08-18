@@ -2,7 +2,7 @@ import time
 
 
 class IcmpFloodDetector:
-    def __init__(self, icmp_threshold=25, time_window=10):
+    def __init__(self, icmp_threshold=50, time_window=10):
         self.icmp_threshold = icmp_threshold
         self.time_window = time_window
         self.icmp_history = {}
