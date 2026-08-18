@@ -6,7 +6,7 @@ from src.detection.syn_flood import SynFloodDetector
 from src.detection.icmp_flood import IcmpFloodDetector
 from src.metrics.metrics_tracker import MetricsTracker
 from src.detection.ssh_brute_force import SSHBruteForceDetector
-
+from src.flow.flow_tracker import FlowTracker
 import argparse
 
 
@@ -15,11 +15,13 @@ syn_flood_detector = SynFloodDetector()
 icmp_flood_detector = IcmpFloodDetector()
 ssh_brute_force_detector = SSHBruteForceDetector()
 metrics_tracker = MetricsTracker()
+flow_tracker = FlowTracker()
 
 
 def process_packet(packet):
     if IP not in packet:
         return
+    flow_tracker.update_flow(packet)
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     src_ip = packet[IP].src
@@ -98,7 +100,7 @@ def process_packet(packet):
             metrics_tracker.record_alert("ICMP Flood")
     
     metrics_tracker.record_packet(protocol)
-
+    process_completed_flows()
     print(
         f"[{timestamp}] "
         f"{protocol} | "
@@ -106,7 +108,14 @@ def process_packet(packet):
         f"Size: {packet_size} bytes | "
         f"Flags: {flags}"
     )
+def process_completed_flows():
+    completed_flows = flow_tracker.get_completed_flows()
 
+    for flow in completed_flows:
+        print("\n--- Completed Flow ---")
+
+        for feature, value in flow.items():
+            print(f"{feature}: {value}")
 
 def print_metrics():
     metrics = metrics_tracker.get_metrics()
@@ -141,6 +150,7 @@ def capture_packets():
         print("\nCapture stopped.")
 
     finally:
+        flush_remaining_flows()
         print_metrics()
 
 
@@ -151,10 +161,18 @@ def analyze_pcap(file_path):
 
     for packet in packets:
         process_packet(packet)
-
+    flush_remaining_flows()
     print_metrics()
+    
 
+def flush_remaining_flows():
+    completed_flows = flow_tracker.flush_flows()
 
+    for flow in completed_flows:
+        print("\n--- Completed Flow ---")
+
+        for feature, value in flow.items():
+            print(f"{feature}: {value}")
 def main():
     parser = argparse.ArgumentParser(description="Hybrid IDS packet analyzer")
 
