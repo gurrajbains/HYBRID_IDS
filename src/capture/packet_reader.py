@@ -3,6 +3,7 @@ from datetime import datetime
 from src.detection.port_scan import PortScanDetector
 from src.alerts.alert_manager import create_alert
 from src.detection.syn_flood import SynFloodDetector
+import argparse
 port_scan_detector = PortScanDetector()
 syn_flood_detector = SynFloodDetector()
 def process_packet(packet):
@@ -70,5 +71,23 @@ def analyze_pcap(file_path):
     packets = rdpcap(file_path)
     for packet in packets:
         process_packet(packet)
+def main():
+    parser = argparse.ArgumentParser(description="Hybrid IDS packet analyzer")
+
+    parser.add_argument("--live", action="store_true", help="Capture live network traffic")
+    parser.add_argument("--pcap", type=str, help="Analyze a PCAP file")
+
+    args = parser.parse_args()
+
+    if args.live:
+        capture_packets()
+
+    elif args.pcap:
+        analyze_pcap(args.pcap)
+
+    else:
+        parser.print_help()
+
+
 if __name__ == "__main__":
-    capture_packets()
+    main()
