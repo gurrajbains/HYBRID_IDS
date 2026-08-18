@@ -1,4 +1,9 @@
+import json
+import os
 from datetime import datetime
+
+
+LOG_FILE = "logs/alerts.jsonl"
 
 
 def create_alert(alert_type, severity, src_ip, dst_ip, description):
@@ -18,5 +23,10 @@ def create_alert(alert_type, severity, src_ip, dst_ip, description):
     print(f"Source IP: {alert['source_ip']}")
     print(f"Destination IP: {alert['destination_ip']}")
     print(f"Description: {alert['description']}\n")
+
+    os.makedirs("logs", exist_ok=True)
+
+    with open(LOG_FILE, "a", encoding="utf-8") as log_file:
+        log_file.write(json.dumps(alert) + "\n")
 
     return alert
