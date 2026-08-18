@@ -1,0 +1,142 @@
+{
+    "model": "RandomForestClassifier",
+    "dataset": "CICIDS2017 Multiclass",
+    "samples": 895993,
+    "features": 78,
+    "training_samples": 716794,
+    "testing_samples": 179199,
+    "accuracy": 0.9990848163215197,
+    "macro_f1": 0.9875474604086069,
+    "weighted_f1": 0.9990870898762926,
+    "classes": [
+        "BENIGN",
+        "Bot",
+        "BruteForce",
+        "DDoS",
+        "DoS",
+        "PortScan",
+        "WebAttack"
+    ],
+    "classification_report": {
+        "BENIGN": {
+            "precision": 0.9987593052109182,
+            "recall": 0.9982,
+            "f1-score": 0.9984795742807986,
+            "support": 50000.0
+        },
+        "Bot": {
+            "precision": 0.9135802469135802,
+            "recall": 0.9462915601023018,
+            "f1-score": 0.9296482412060302,
+            "support": 391.0
+        },
+        "BruteForce": {
+            "precision": 1.0,
+            "recall": 0.9996385977593061,
+            "f1-score": 0.9998192662208567,
+            "support": 2767.0
+        },
+        "DDoS": {
+            "precision": 0.999804702757597,
+            "recall": 0.9996875610232376,
+            "f1-score": 0.9997461284589998,
+            "support": 25605.0
+        },
+        "DoS": {
+            "precision": 0.999280172758538,
+            "recall": 0.99952,
+            "f1-score": 0.999400071991361,
+            "support": 50000.0
+        },
+        "PortScan": {
+            "precision": 0.9995001599488164,
+            "recall": 0.99982,
+            "f1-score": 0.9996600543912973,
+            "support": 50000.0
+        },
+        "WebAttack": {
+            "precision": 0.9976525821596244,
+            "recall": 0.9747706422018348,
+            "f1-score": 0.9860788863109049,
+            "support": 436.0
+        },
+        "accuracy": 0.9990848163215197,
+        "macro avg": {
+            "precision": 0.9869395956784391,
+            "recall": 0.9882754801552399,
+            "f1-score": 0.9875474604086069,
+            "support": 179199.0
+        },
+        "weighted avg": {
+            "precision": 0.9990913326100408,
+            "recall": 0.9990848163215197,
+            "f1-score": 0.9990870898762926,
+            "support": 179199.0
+        }
+    },
+    "confusion_matrix": [
+        [
+            49910,
+            35,
+            0,
+            4,
+            30,
+            21,
+            0
+        ],
+        [
+            21,
+            370,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        [
+            0,
+            0,
+            2766,
+            0,
+            0,
+            0,
+            1
+        ],
+        [
+            7,
+            0,
+            0,
+            25597,
+            1,
+            0,
+            0
+        ],
+        [
+            22,
+            0,
+            0,
+            1,
+            49976,
+            1,
+            0
+        ],
+        [
+            4,
+            0,
+            0,
+            0,
+            5,
+            49991,
+            0
+        ],
+        [
+            8,
+            0,
+            0,
+            0,
+            0,
+            3,
+            425
+        ]
+    ]
+}
