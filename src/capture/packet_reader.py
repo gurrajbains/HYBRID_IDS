@@ -7,6 +7,7 @@ from src.detection.icmp_flood import IcmpFloodDetector
 from src.metrics.metrics_tracker import MetricsTracker
 from src.detection.ssh_brute_force import SSHBruteForceDetector
 from src.flow.flow_tracker import FlowTracker
+from src.ml.live_detector import LiveMLDetector
 import argparse
 
 
@@ -16,6 +17,7 @@ icmp_flood_detector = IcmpFloodDetector()
 ssh_brute_force_detector = SSHBruteForceDetector()
 metrics_tracker = MetricsTracker()
 flow_tracker = FlowTracker()
+live_ml_detector = LiveMLDetector()
 
 
 def process_packet(packet):
@@ -113,11 +115,24 @@ def process_completed_flows():
     completed_flows = flow_tracker.get_completed_flows()
 
     for flow in completed_flows:
+        result = live_ml_detector.predict(flow)
+
         print("\n--- Completed Flow ---")
+        print(f"ML Prediction: {result['prediction']}")
+        print(f"Confidence: {result['confidence']:.2%}")
 
-        for feature, value in flow.items():
-            print(f"{feature}: {value}")
+        if result["prediction"] != "BENIGN":
+            create_alert(
+                f"ML Detection: {result['prediction']}",
+                "High",
+                "Flow-Based",
+                "Flow-Based",
+                f"Machine learning model classified the network flow as {result['prediction']} with {result['confidence']:.2%} confidence",
+                detector="RandomForestLiveDetector",
+                protocol="FLOW"
+            )
 
+            metrics_tracker.record_alert(f"ML {result['prediction']}")
 def print_metrics():
     metrics = metrics_tracker.get_metrics()
 
@@ -169,11 +184,30 @@ def analyze_pcap(file_path):
 def flush_remaining_flows():
     completed_flows = flow_tracker.flush_flows()
 
-    for flow in completed_flows:
-        print("\n--- Completed Flow ---")
+    if not completed_flows:
+        return
 
-        for feature, value in flow.items():
-            print(f"{feature}: {value}")
+    print(f"\nClassifying {len(completed_flows)} remaining flows...")
+
+    results = live_ml_detector.predict_batch(completed_flows)
+
+    for result in results:
+        print("\n--- Completed Flow ---")
+        print(f"ML Prediction: {result['prediction']}")
+        print(f"Confidence: {result['confidence']:.2%}")
+
+        if result["prediction"] != "BENIGN":
+            create_alert(
+                f"ML Detection: {result['prediction']}",
+                "High",
+                "Flow-Based",
+                "Flow-Based",
+                f"Machine learning model classified the network flow as {result['prediction']} with {result['confidence']:.2%} confidence",
+                detector="RandomForestLiveDetector",
+                protocol="FLOW"
+            )
+
+            metrics_tracker.record_alert(f"ML {result['prediction']}")
 def main():
     parser = argparse.ArgumentParser(description="Hybrid IDS packet analyzer")
 
