@@ -1,4 +1,5 @@
 import time
+import statistics
 from scapy.all import IP, TCP, UDP
 
 
@@ -38,12 +39,21 @@ class FlowTracker:
     def create_flow(self, packet):
         current_time = time.time()
 
+        if TCP in packet:
+            origin_port = packet[TCP].sport
+            destination_port = packet[TCP].dport
+        else:
+            origin_port = packet[UDP].sport
+            destination_port = packet[UDP].dport
+
         return {
             "start_time": current_time,
             "last_time": current_time,
 
             "origin_ip": packet[IP].src,
-            "origin_port": packet[TCP].sport if TCP in packet else packet[UDP].sport,
+            "origin_port": origin_port,
+            "destination_ip": packet[IP].dst,
+            "destination_port": destination_port,
 
             "forward_packets": 0,
             "backward_packets": 0,
@@ -51,12 +61,20 @@ class FlowTracker:
             "forward_bytes": 0,
             "backward_bytes": 0,
 
+            "forward_lengths": [],
+            "backward_lengths": [],
             "packet_lengths": [],
+
+            "packet_times": [],
+            "forward_times": [],
+            "backward_times": [],
 
             "syn_count": 0,
             "ack_count": 0,
             "fin_count": 0,
-            "rst_count": 0
+            "rst_count": 0,
+            "psh_count": 0,
+            "urg_count": 0
         }
 
     def update_flow(self, packet):
@@ -75,6 +93,7 @@ class FlowTracker:
 
         flow["last_time"] = current_time
         flow["packet_lengths"].append(packet_size)
+        flow["packet_times"].append(current_time)
 
         src_ip = packet[IP].src
 
@@ -83,13 +102,19 @@ class FlowTracker:
         else:
             src_port = packet[UDP].sport
 
-        if src_ip == flow["origin_ip"] and src_port == flow["origin_port"]:
+        is_forward = src_ip == flow["origin_ip"] and src_port == flow["origin_port"]
+
+        if is_forward:
             flow["forward_packets"] += 1
             flow["forward_bytes"] += packet_size
+            flow["forward_lengths"].append(packet_size)
+            flow["forward_times"].append(current_time)
 
         else:
             flow["backward_packets"] += 1
             flow["backward_bytes"] += packet_size
+            flow["backward_lengths"].append(packet_size)
+            flow["backward_times"].append(current_time)
 
         if TCP in packet:
             flags = str(packet[TCP].flags)
@@ -106,20 +131,48 @@ class FlowTracker:
             if "R" in flags:
                 flow["rst_count"] += 1
 
+            if "P" in flags:
+                flow["psh_count"] += 1
+
+            if "U" in flags:
+                flow["urg_count"] += 1
+
         return flow
 
-    def get_completed_flows(self):
-        current_time = time.time()
-        completed = []
+    def calculate_stats(self, values):
+        if not values:
+            return 0, 0, 0, 0
 
-        for key, flow in list(self.flows.items()):
-            if current_time - flow["last_time"] >= self.flow_timeout:
-                features = self.extract_features(flow)
-                completed.append(features)
+        minimum = min(values)
+        maximum = max(values)
+        mean = statistics.mean(values)
 
-                del self.flows[key]
+        if len(values) > 1:
+            std = statistics.pstdev(values)
+        else:
+            std = 0
 
-        return completed
+        return minimum, maximum, mean, std
+
+    def calculate_iat(self, timestamps):
+        if len(timestamps) < 2:
+            return 0, 0, 0, 0
+
+        iats = []
+
+        for index in range(1, len(timestamps)):
+            iats.append(timestamps[index] - timestamps[index - 1])
+
+        minimum = min(iats)
+        maximum = max(iats)
+        mean = statistics.mean(iats)
+
+        if len(iats) > 1:
+            std = statistics.pstdev(iats)
+        else:
+            std = 0
+
+        return minimum, maximum, mean, std
 
     def extract_features(self, flow):
         duration = flow["last_time"] - flow["start_time"]
@@ -130,38 +183,88 @@ class FlowTracker:
         total_packets = flow["forward_packets"] + flow["backward_packets"]
         total_bytes = flow["forward_bytes"] + flow["backward_bytes"]
 
-        if flow["packet_lengths"]:
-            minimum_length = min(flow["packet_lengths"])
-            maximum_length = max(flow["packet_lengths"])
-            average_length = sum(flow["packet_lengths"]) / len(flow["packet_lengths"])
-        else:
-            minimum_length = 0
-            maximum_length = 0
-            average_length = 0
+        packet_min, packet_max, packet_mean, packet_std = self.calculate_stats(flow["packet_lengths"])
+        fwd_min, fwd_max, fwd_mean, fwd_std = self.calculate_stats(flow["forward_lengths"])
+        bwd_min, bwd_max, bwd_mean, bwd_std = self.calculate_stats(flow["backward_lengths"])
+
+        flow_iat_min, flow_iat_max, flow_iat_mean, flow_iat_std = self.calculate_iat(flow["packet_times"])
+        fwd_iat_min, fwd_iat_max, fwd_iat_mean, fwd_iat_std = self.calculate_iat(flow["forward_times"])
+        bwd_iat_min, bwd_iat_max, bwd_iat_mean, bwd_iat_std = self.calculate_iat(flow["backward_times"])
+
+        packet_variance = packet_std ** 2
 
         return {
+            "Destination Port": flow["destination_port"],
+
             "Flow Duration": duration,
+
             "Total Fwd Packets": flow["forward_packets"],
             "Total Backward Packets": flow["backward_packets"],
+
             "Total Length of Fwd Packets": flow["forward_bytes"],
             "Total Length of Bwd Packets": flow["backward_bytes"],
+
+            "Fwd Packet Length Max": fwd_max,
+            "Fwd Packet Length Min": fwd_min,
+            "Fwd Packet Length Mean": fwd_mean,
+            "Fwd Packet Length Std": fwd_std,
+
+            "Bwd Packet Length Max": bwd_max,
+            "Bwd Packet Length Min": bwd_min,
+            "Bwd Packet Length Mean": bwd_mean,
+            "Bwd Packet Length Std": bwd_std,
+
             "Flow Bytes/s": total_bytes / duration,
             "Flow Packets/s": total_packets / duration,
-            "Min Packet Length": minimum_length,
-            "Max Packet Length": maximum_length,
-            "Packet Length Mean": average_length,
+
+            "Flow IAT Mean": flow_iat_mean,
+            "Flow IAT Std": flow_iat_std,
+            "Flow IAT Max": flow_iat_max,
+            "Flow IAT Min": flow_iat_min,
+
+            "Fwd IAT Mean": fwd_iat_mean,
+            "Fwd IAT Std": fwd_iat_std,
+            "Fwd IAT Max": fwd_iat_max,
+            "Fwd IAT Min": fwd_iat_min,
+
+            "Bwd IAT Mean": bwd_iat_mean,
+            "Bwd IAT Std": bwd_iat_std,
+            "Bwd IAT Max": bwd_iat_max,
+            "Bwd IAT Min": bwd_iat_min,
+
+            "Fwd Packets/s": flow["forward_packets"] / duration,
+            "Bwd Packets/s": flow["backward_packets"] / duration,
+
+            "Min Packet Length": packet_min,
+            "Max Packet Length": packet_max,
+            "Packet Length Mean": packet_mean,
+            "Packet Length Std": packet_std,
+            "Packet Length Variance": packet_variance,
+
             "FIN Flag Count": flow["fin_count"],
             "SYN Flag Count": flow["syn_count"],
             "RST Flag Count": flow["rst_count"],
-            "ACK Flag Count": flow["ack_count"]
+            "PSH Flag Count": flow["psh_count"],
+            "ACK Flag Count": flow["ack_count"],
+            "URG Flag Count": flow["urg_count"]
         }
+
+    def get_completed_flows(self):
+        current_time = time.time()
+        completed = []
+
+        for key, flow in list(self.flows.items()):
+            if current_time - flow["last_time"] >= self.flow_timeout:
+                completed.append(self.extract_features(flow))
+                del self.flows[key]
+
+        return completed
+
     def flush_flows(self):
         completed = []
 
         for key, flow in list(self.flows.items()):
-            features = self.extract_features(flow)
-            completed.append(features)
-
+            completed.append(self.extract_features(flow))
             del self.flows[key]
 
         return completed
