@@ -2,41 +2,42 @@ import time
 
 
 class SSHBruteForceDetector:
-    def __init__(self, attempt_threshold=10, time_window=30):
+    def __init__(self, attempt_threshold=10, time_window=30, cooldown=30):
         self.attempt_threshold = attempt_threshold
         self.time_window = time_window
-        self.attempt_history = {}
+        self.cooldown = cooldown
+
+        self.history = {}
+        self.last_alert = {}
 
     def check(self, src_ip, dst_ip, dst_port):
         if dst_port != 22:
             return False
 
         current_time = time.time()
+
         key = (src_ip, dst_ip)
 
-        if key not in self.attempt_history:
-            self.attempt_history[key] = []
+        if key not in self.history:
+            self.history[key] = []
 
-        self.attempt_history[key].append(current_time)
+        self.history[key].append(current_time)
 
-        recent_attempts = []
+        self.history[key] = [
+            timestamp
+            for timestamp in self.history[key]
+            if current_time - timestamp <= self.time_window
+        ]
 
-        for timestamp in self.attempt_history[key]:
-            if current_time - timestamp <= self.time_window:
-                recent_attempts.append(timestamp)
+        if len(self.history[key]) < self.attempt_threshold:
+            return False
 
-        self.attempt_history[key] = recent_attempts
+        last_alert_time = self.last_alert.get(key)
 
-        if len(recent_attempts) >= self.attempt_threshold:
-            return True
+        if last_alert_time is not None:
+            if current_time - last_alert_time < self.cooldown:
+                return False
 
-        return False
-if __name__ == "__main__":
-    detector = SSHBruteForceDetector(attempt_threshold=5, time_window=30)
+        self.last_alert[key] = current_time
 
-    test_ip = "192.168.1.50"
-    target_ip = "192.168.1.19"
-
-    for attempt in range(1, 6):
-        detected = detector.check(test_ip, target_ip, 22)
-        print(f"SSH attempt {attempt} -> Alert: {detected}")
+        return True
