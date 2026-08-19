@@ -175,10 +175,12 @@ class FlowTracker:
         return minimum, maximum, mean, std
 
     def extract_features(self, flow):
-        duration = flow["last_time"] - flow["start_time"]
+        duration_seconds = flow["last_time"] - flow["start_time"]
 
-        if duration <= 0:
-            duration = 0.000001
+        if duration_seconds <= 0:
+            duration_seconds = 0.000001
+
+        duration_microseconds = duration_seconds * 1_000_000
 
         total_packets = flow["forward_packets"] + flow["backward_packets"]
         total_bytes = flow["forward_bytes"] + flow["backward_bytes"]
@@ -191,12 +193,26 @@ class FlowTracker:
         fwd_iat_min, fwd_iat_max, fwd_iat_mean, fwd_iat_std = self.calculate_iat(flow["forward_times"])
         bwd_iat_min, bwd_iat_max, bwd_iat_mean, bwd_iat_std = self.calculate_iat(flow["backward_times"])
 
+        flow_iat_min *= 1_000_000
+        flow_iat_max *= 1_000_000
+        flow_iat_mean *= 1_000_000
+        flow_iat_std *= 1_000_000
+
+        fwd_iat_min *= 1_000_000
+        fwd_iat_max *= 1_000_000
+        fwd_iat_mean *= 1_000_000
+        fwd_iat_std *= 1_000_000
+
+        bwd_iat_min *= 1_000_000
+        bwd_iat_max *= 1_000_000
+        bwd_iat_mean *= 1_000_000
+        bwd_iat_std *= 1_000_000
+
         packet_variance = packet_std ** 2
 
         return {
             "Destination Port": flow["destination_port"],
-
-            "Flow Duration": duration,
+            "Flow Duration": duration_microseconds,
 
             "Total Fwd Packets": flow["forward_packets"],
             "Total Backward Packets": flow["backward_packets"],
@@ -214,8 +230,8 @@ class FlowTracker:
             "Bwd Packet Length Mean": bwd_mean,
             "Bwd Packet Length Std": bwd_std,
 
-            "Flow Bytes/s": total_bytes / duration,
-            "Flow Packets/s": total_packets / duration,
+            "Flow Bytes/s": total_bytes / duration_seconds,
+            "Flow Packets/s": total_packets / duration_seconds,
 
             "Flow IAT Mean": flow_iat_mean,
             "Flow IAT Std": flow_iat_std,
@@ -232,8 +248,8 @@ class FlowTracker:
             "Bwd IAT Max": bwd_iat_max,
             "Bwd IAT Min": bwd_iat_min,
 
-            "Fwd Packets/s": flow["forward_packets"] / duration,
-            "Bwd Packets/s": flow["backward_packets"] / duration,
+            "Fwd Packets/s": flow["forward_packets"] / duration_seconds,
+            "Bwd Packets/s": flow["backward_packets"] / duration_seconds,
 
             "Min Packet Length": packet_min,
             "Max Packet Length": packet_max,
