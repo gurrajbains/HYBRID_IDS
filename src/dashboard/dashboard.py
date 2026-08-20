@@ -133,6 +133,7 @@ if theme == "Dark":
     secondary_background = "#0F172A"
     input_background = "#111827"
     border_color = "#263244"
+    chart_frame_border = "#3A4A60"
     text_color = "#F8FAFC"
     muted_text = "#94A3B8"
 
@@ -143,6 +144,7 @@ else:
     secondary_background = "#F8FAFC"
     input_background = "#FFFFFF"
     border_color = "#D8E0EA"
+    chart_frame_border = "#A9B7C7"
     text_color = "#111827"
     muted_text = "#64748B"
 
@@ -295,6 +297,14 @@ body,
     z-index: 999999 !important;
 }}
 
+/* Move the close arrow 15px left while the sidebar is expanded.
+   The collapsed/open control stays inside the 38px rail so it cannot
+   disappear beyond the left edge of the browser window. */
+[data-testid="stSidebar"][aria-expanded="true"]
+[data-testid="stSidebarCollapseButton"] {{
+    transform: translateX(-25px) !important;
+}}
+
 [data-testid="stSidebarCollapseButton"] button {{
     display: flex !important;
     visibility: visible !important;
@@ -309,7 +319,7 @@ body,
     opacity: 1 !important;
     position: absolute !important;
     top: 8px !important;
-    left: -13px !important;
+    left: 2px !important;
     width: 34px !important;
     height: 34px !important;
     justify-content: center !important;
@@ -536,6 +546,156 @@ body,
 
 
 /* ---------------------------------------------------------
+   CHART CONTAINERS
+--------------------------------------------------------- */
+
+/* The outer Streamlit container is the single frame for each chart card. */
+[data-testid="stVerticalBlockBorderWrapper"] {{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    background-color: {panel_background} !important;
+    border: 1px solid {chart_frame_border} !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
+    overflow: hidden !important;
+    box-shadow: 0 0 0 1px {chart_frame_border}22 !important;
+}}
+
+/* Never allow an internal Streamlit block to force the frame wider. */
+[data-testid="stVerticalBlockBorderWrapper"] > div,
+[data-testid="stVerticalBlockBorderWrapper"] [data-testid="stVerticalBlock"] {{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}}
+
+/* Center every Vega-Lite chart inside its frame and contain its dimensions. */
+[data-testid="stVegaLiteChart"] {{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    background-color: {secondary_background} !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    margin: 12px auto 0 auto !important;
+}}
+
+/* Vega's generated wrapper must obey the chart frame width. */
+[data-testid="stVegaLiteChart"] .vega-embed,
+[data-testid="stVegaLiteChart"] > div {{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    overflow: hidden !important;
+}}
+
+/* SVG/canvas renderers may have intrinsic pixel widths; constrain them. */
+[data-testid="stVegaLiteChart"] svg,
+[data-testid="stVegaLiteChart"] canvas {{
+    display: block !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}}
+
+/* ---------------------------------------------------------
+   RESPONSIVE / ZOOM SAFETY
+--------------------------------------------------------- */
+
+/* Keep every Streamlit column from forcing content outside its own frame. */
+[data-testid="stHorizontalBlock"],
+[data-testid="column"] {{
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}}
+
+[data-testid="column"] > div {{
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}}
+
+/* Framed components should grow vertically rather than clip text. */
+.small-card,
+.panel,
+.alert-row,
+[data-testid="stAlert"],
+[data-testid="stDataFrame"] {{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}}
+
+.small-card {{
+    height: auto !important;
+    min-height: 100px !important;
+}}
+
+/* Allow labels, values, descriptions, alert details and headings to wrap
+   when browser zoom reduces available width. */
+.card-label,
+.card-value,
+.panel-title,
+.panel-description,
+.alert-type,
+.alert-details,
+.page-title,
+.page-subtitle,
+.section-title,
+[data-testid="stAlert"] p {{
+    max-width: 100% !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+}}
+
+/* Streamlit dataframes stay inside their frame and can scroll internally. */
+[data-testid="stDataFrame"] {{
+    overflow: auto !important;
+}}
+
+/* At high browser zoom / narrow windows, stack multi-column layouts instead
+   of squeezing cards and graphs until their contents overflow. */
+@media (max-width: 900px) {{
+    [data-testid="stHorizontalBlock"] {{
+        flex-wrap: wrap !important;
+        gap: 0.75rem !important;
+    }}
+
+    [data-testid="column"] {{
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }}
+
+    .block-container {{
+        padding-left: 0.8rem !important;
+        padding-right: 0.8rem !important;
+    }}
+
+    .page-title {{
+        font-size: 1.65rem !important;
+    }}
+}}
+
+
+/* ---------------------------------------------------------
    TABLES
 --------------------------------------------------------- */
 
@@ -596,15 +756,169 @@ def metric_card(label, value="—"):
     st.markdown(html, unsafe_allow_html=True)
 
 
-def empty_graph_panel(title, description):
+def chart_header(title, description):
     html = f"""
-<div class="panel">
 <div class="panel-title">{title}</div>
 <div class="panel-description">{description}</div>
-<div class="empty-graph"></div>
-</div>
 """
     st.markdown(html, unsafe_allow_html=True)
+
+
+def build_flow_timeseries(records):
+    if not records:
+        return pd.DataFrame()
+
+    dataframe = pd.DataFrame(records)
+
+    if "timestamp" not in dataframe.columns:
+        return pd.DataFrame()
+
+    dataframe["timestamp"] = pd.to_datetime(dataframe["timestamp"], errors="coerce")
+    dataframe = dataframe.dropna(subset=["timestamp"])
+
+    if dataframe.empty:
+        return pd.DataFrame()
+
+    dataframe = dataframe.set_index("timestamp").sort_index()
+    series = dataframe.resample("1min").size().rename("Completed Flows")
+
+    return series.to_frame()
+
+
+def build_flow_bytes_timeseries(records):
+    if not records:
+        return pd.DataFrame()
+
+    dataframe = pd.DataFrame(records)
+
+    if "timestamp" not in dataframe.columns or "total_bytes" not in dataframe.columns:
+        return pd.DataFrame()
+
+    dataframe["timestamp"] = pd.to_datetime(dataframe["timestamp"], errors="coerce")
+    dataframe["total_bytes"] = pd.to_numeric(dataframe["total_bytes"], errors="coerce").fillna(0)
+    dataframe = dataframe.dropna(subset=["timestamp"])
+
+    if dataframe.empty:
+        return pd.DataFrame()
+
+    dataframe = dataframe.set_index("timestamp").sort_index()
+    series = dataframe["total_bytes"].resample("1min").sum().rename("Bytes")
+
+    return series.to_frame()
+
+
+def build_alert_timeseries(records):
+    if not records:
+        return pd.DataFrame()
+
+    dataframe = pd.DataFrame(records)
+
+    if "timestamp" not in dataframe.columns:
+        return pd.DataFrame()
+
+    dataframe["timestamp"] = pd.to_datetime(dataframe["timestamp"], errors="coerce")
+    dataframe = dataframe.dropna(subset=["timestamp"])
+
+    if dataframe.empty:
+        return pd.DataFrame()
+
+    dataframe = dataframe.set_index("timestamp").sort_index()
+    series = dataframe.resample("1min").size().rename("Alerts")
+
+    return series.to_frame()
+
+
+def build_protocol_dataframe(protocol_data):
+    rows = []
+
+    for protocol in ["TCP", "UDP", "ICMP", "OTHER"]:
+        rows.append({
+            "Protocol": protocol,
+            "Packets": protocol_data.get(protocol, 0)
+        })
+
+    return pd.DataFrame(rows).set_index("Protocol")
+
+
+def build_model_performance_dataframe(model_data):
+    report = (
+        model_data.get("classification_report")
+        or model_data.get("class_report")
+        or model_data.get("report")
+    )
+
+    if isinstance(report, dict):
+        rows = []
+
+        for class_name, values in report.items():
+            if class_name in {"accuracy", "macro avg", "weighted avg"}:
+                continue
+
+            if not isinstance(values, dict):
+                continue
+
+            f1_score = values.get("f1-score")
+
+            if f1_score is None:
+                continue
+
+            rows.append({
+                "Class": class_name,
+                "F1 Score": float(f1_score) * 100
+            })
+
+        if rows:
+            return pd.DataFrame(rows).set_index("Class")
+
+    rows = []
+
+    accuracy = model_data.get("accuracy")
+    macro_f1 = model_data.get("macro_f1")
+    weighted_f1 = model_data.get("weighted_f1")
+
+    if accuracy is not None:
+        rows.append({"Metric": "Accuracy", "Score": float(accuracy) * 100})
+
+    if macro_f1 is not None:
+        rows.append({"Metric": "Macro F1", "Score": float(macro_f1) * 100})
+
+    if weighted_f1 is not None:
+        rows.append({"Metric": "Weighted F1", "Score": float(weighted_f1) * 100})
+
+    if not rows:
+        return pd.DataFrame()
+
+    return pd.DataFrame(rows).set_index("Metric")
+
+
+def build_confidence_dataframe(records):
+    if not records:
+        return pd.DataFrame()
+
+    dataframe = pd.DataFrame(records)
+
+    if "confidence" not in dataframe.columns:
+        return pd.DataFrame()
+
+    confidence = pd.to_numeric(dataframe["confidence"], errors="coerce").dropna()
+
+    if confidence.empty:
+        return pd.DataFrame()
+
+    bins = [0, 0.5, 0.6, 0.7, 0.8, 0.9, 1.000001]
+    labels = ["<50%", "50–59%", "60–69%", "70–79%", "80–89%", "90–100%"]
+
+    categories = pd.cut(
+        confidence,
+        bins=bins,
+        labels=labels,
+        include_lowest=True,
+        right=False
+    )
+
+    counts = categories.value_counts(sort=False).rename("Predictions")
+
+    return counts.to_frame()
 
 
 def render_alert(alert):
@@ -706,17 +1020,38 @@ if page == "Overview":
 
     graph1, graph2 = st.columns(2)
 
+    flow_activity = build_flow_timeseries(flow_records)
+    alert_activity = build_alert_timeseries(alerts)
+
     with graph1:
-        empty_graph_panel(
-            "Network Activity",
-            "Packet and flow activity over time"
-        )
+        with st.container(border=True):
+            chart_header(
+                "Network Activity",
+                "Completed network flows per minute"
+            )
+
+            if not flow_activity.empty:
+                st.line_chart(
+                    flow_activity,
+                    height=240
+                )
+            else:
+                st.info("No completed flow history is available yet.")
 
     with graph2:
-        empty_graph_panel(
-            "Detection Activity",
-            "Signature and ML detection activity"
-        )
+        with st.container(border=True):
+            chart_header(
+                "Detection Activity",
+                "Security alerts recorded per minute"
+            )
+
+            if not alert_activity.empty:
+                st.bar_chart(
+                    alert_activity,
+                    height=240
+                )
+            else:
+                st.info("No alert history is available yet.")
 
     st.markdown(
         '<div class="section-title">Recent Alerts</div>',
@@ -844,17 +1179,35 @@ elif page == "Network":
 
     graph1, graph2 = st.columns(2)
 
+    protocol_dataframe = build_protocol_dataframe(protocol_counts)
+    flow_bytes_activity = build_flow_bytes_timeseries(flow_records)
+
     with graph1:
-        empty_graph_panel(
-            "Protocol Distribution",
-            "Traffic grouped by network protocol"
-        )
+        with st.container(border=True):
+            chart_header(
+                "Protocol Distribution",
+                "Current session packet counts by protocol"
+            )
+
+            st.bar_chart(
+                protocol_dataframe,
+                height=240
+            )
 
     with graph2:
-        empty_graph_panel(
-            "Flow Activity",
-            "Network flow activity over time"
-        )
+        with st.container(border=True):
+            chart_header(
+                "Flow Activity",
+                "Bytes represented by completed flows per minute"
+            )
+
+            if not flow_bytes_activity.empty:
+                st.line_chart(
+                    flow_bytes_activity,
+                    height=240
+                )
+            else:
+                st.info("No completed flow history is available yet.")
 
     st.markdown(
         '<div class="section-title">Recent Flow Records</div>',
@@ -962,17 +1315,49 @@ elif page == "Machine Learning":
 
     graph1, graph2 = st.columns(2)
 
+    model_performance = build_model_performance_dataframe(model_metrics)
+    confidence_dataframe = build_confidence_dataframe(predictions)
+
     with graph1:
-        empty_graph_panel(
-            "Class Performance",
-            "Model performance across supported attack classes"
-        )
+        with st.container(border=True):
+            if isinstance(
+                model_metrics.get("classification_report")
+                or model_metrics.get("class_report")
+                or model_metrics.get("report"),
+                dict
+            ):
+                chart_header(
+                    "Class Performance",
+                    "F1 score by model class"
+                )
+            else:
+                chart_header(
+                    "Model Evaluation",
+                    "Saved evaluation scores for the live Random Forest model"
+                )
+
+            if not model_performance.empty:
+                st.bar_chart(
+                    model_performance,
+                    height=240
+                )
+            else:
+                st.info("No saved model evaluation data is available.")
 
     with graph2:
-        empty_graph_panel(
-            "Prediction Confidence",
-            "Model confidence across classified flows"
-        )
+        with st.container(border=True):
+            chart_header(
+                "Prediction Confidence",
+                "Recent ML predictions grouped by confidence range"
+            )
+
+            if not confidence_dataframe.empty:
+                st.bar_chart(
+                    confidence_dataframe,
+                    height=240
+                )
+            else:
+                st.info("No prediction confidence history is available yet.")
 
     st.markdown(
         '<div class="section-title">Recent Predictions</div>',
