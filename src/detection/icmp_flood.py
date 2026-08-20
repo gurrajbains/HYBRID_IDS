@@ -1,32 +1,35 @@
 import time
+from collections import defaultdict
 
 
 class IcmpFloodDetector:
-    def __init__(self, icmp_threshold=50, time_window=10, cooldown=15):
-        self.icmp_threshold = icmp_threshold
-        self.time_window = time_window
+    def __init__(self, threshold=50, window=10, cooldown=15):
+        self.threshold = threshold
+        self.window = window
         self.cooldown = cooldown
 
-        self.history = {}
+        self.attempts = defaultdict(list)
         self.last_alert = {}
 
-    def check(self, src_ip, dst_ip):
-        current_time = time.time()
+    def check(self, src_ip, dst_ip, current_time=None):
+        if current_time is None:
+            current_time = time.time()
 
         key = (src_ip, dst_ip)
 
-        if key not in self.history:
-            self.history[key] = []
+        self.attempts[key].append(
+            current_time
+        )
 
-        self.history[key].append(current_time)
+        cutoff = current_time - self.window
 
-        self.history[key] = [
+        self.attempts[key] = [
             timestamp
-            for timestamp in self.history[key]
-            if current_time - timestamp <= self.time_window
+            for timestamp in self.attempts[key]
+            if timestamp >= cutoff
         ]
 
-        if len(self.history[key]) < self.icmp_threshold:
+        if len(self.attempts[key]) < self.threshold:
             return False
 
         last_alert_time = self.last_alert.get(key)

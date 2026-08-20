@@ -37,8 +37,9 @@ class FlowTracker:
 
         return endpoint_two, endpoint_one, protocol
 
-    def create_flow(self, packet):
-        current_time = time.time()
+    def create_flow(self, packet, current_time=None):
+        if current_time is None:
+            current_time = time.time()
 
         if TCP in packet:
             protocol = "TCP"
@@ -76,18 +77,20 @@ class FlowTracker:
             "urg_count": 0
         }
 
-    def update_flow(self, packet):
+    def update_flow(self, packet, current_time=None):
+        if current_time is None:
+            current_time = time.time()
+
         key = self.get_flow_key(packet)
 
         if key is None:
             return None
 
         if key not in self.flows:
-            self.flows[key] = self.create_flow(packet)
+            self.flows[key] = self.create_flow(packet, current_time)
 
         flow = self.flows[key]
 
-        current_time = time.time()
         packet_size = len(packet)
 
         flow["last_time"] = current_time
@@ -217,7 +220,8 @@ class FlowTracker:
             "Protocol": flow["protocol"],
             "Packet Count": total_packets,
             "Total Bytes": total_bytes,
-            "Destination Port": flow["destination_port"],
+            "Flow Start Time": flow["start_time"],
+            "Flow End Time": flow["last_time"],
             "Flow Duration": duration_microseconds,
             "Total Fwd Packets": flow["forward_packets"],
             "Total Backward Packets": flow["backward_packets"],
@@ -263,8 +267,10 @@ class FlowTracker:
     def get_active_flow_count(self):
         return len(self.flows)
 
-    def get_completed_flows(self):
-        current_time = time.time()
+    def get_completed_flows(self, current_time=None):
+        if current_time is None:
+            current_time = time.time()
+
         completed = []
 
         for key, flow in list(self.flows.items()):

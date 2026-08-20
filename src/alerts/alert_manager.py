@@ -6,9 +6,12 @@ from datetime import datetime
 LOG_FILE = "logs/alerts.jsonl"
 
 
-def create_alert(alert_type, severity, src_ip, dst_ip, description, detector=None, protocol=None):
+def create_alert(alert_type, severity, src_ip, dst_ip, description, detector=None, protocol=None, timestamp=None):
+    if timestamp is None:
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
     alert = {
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "timestamp": timestamp,
         "type": alert_type,
         "severity": severity,
         "source_ip": src_ip,
