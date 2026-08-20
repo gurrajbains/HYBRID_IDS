@@ -1,5 +1,6 @@
-import time
 import statistics
+import time
+
 from scapy.all import IP, TCP, UDP
 
 
@@ -40,35 +41,33 @@ class FlowTracker:
         current_time = time.time()
 
         if TCP in packet:
+            protocol = "TCP"
             origin_port = packet[TCP].sport
             destination_port = packet[TCP].dport
+
         else:
+            protocol = "UDP"
             origin_port = packet[UDP].sport
             destination_port = packet[UDP].dport
 
         return {
             "start_time": current_time,
             "last_time": current_time,
-
             "origin_ip": packet[IP].src,
             "origin_port": origin_port,
             "destination_ip": packet[IP].dst,
             "destination_port": destination_port,
-
+            "protocol": protocol,
             "forward_packets": 0,
             "backward_packets": 0,
-
             "forward_bytes": 0,
             "backward_bytes": 0,
-
             "forward_lengths": [],
             "backward_lengths": [],
             "packet_lengths": [],
-
             "packet_times": [],
             "forward_times": [],
             "backward_times": [],
-
             "syn_count": 0,
             "ack_count": 0,
             "fin_count": 0,
@@ -211,52 +210,48 @@ class FlowTracker:
         packet_variance = packet_std ** 2
 
         return {
+            "Source IP": flow["origin_ip"],
+            "Source Port": flow["origin_port"],
+            "Destination IP": flow["destination_ip"],
+            "Destination Port": flow["destination_port"],
+            "Protocol": flow["protocol"],
+            "Packet Count": total_packets,
+            "Total Bytes": total_bytes,
             "Destination Port": flow["destination_port"],
             "Flow Duration": duration_microseconds,
-
             "Total Fwd Packets": flow["forward_packets"],
             "Total Backward Packets": flow["backward_packets"],
-
             "Total Length of Fwd Packets": flow["forward_bytes"],
             "Total Length of Bwd Packets": flow["backward_bytes"],
-
             "Fwd Packet Length Max": fwd_max,
             "Fwd Packet Length Min": fwd_min,
             "Fwd Packet Length Mean": fwd_mean,
             "Fwd Packet Length Std": fwd_std,
-
             "Bwd Packet Length Max": bwd_max,
             "Bwd Packet Length Min": bwd_min,
             "Bwd Packet Length Mean": bwd_mean,
             "Bwd Packet Length Std": bwd_std,
-
             "Flow Bytes/s": total_bytes / duration_seconds,
             "Flow Packets/s": total_packets / duration_seconds,
-
             "Flow IAT Mean": flow_iat_mean,
             "Flow IAT Std": flow_iat_std,
             "Flow IAT Max": flow_iat_max,
             "Flow IAT Min": flow_iat_min,
-
             "Fwd IAT Mean": fwd_iat_mean,
             "Fwd IAT Std": fwd_iat_std,
             "Fwd IAT Max": fwd_iat_max,
             "Fwd IAT Min": fwd_iat_min,
-
             "Bwd IAT Mean": bwd_iat_mean,
             "Bwd IAT Std": bwd_iat_std,
             "Bwd IAT Max": bwd_iat_max,
             "Bwd IAT Min": bwd_iat_min,
-
             "Fwd Packets/s": flow["forward_packets"] / duration_seconds,
             "Bwd Packets/s": flow["backward_packets"] / duration_seconds,
-
             "Min Packet Length": packet_min,
             "Max Packet Length": packet_max,
             "Packet Length Mean": packet_mean,
             "Packet Length Std": packet_std,
             "Packet Length Variance": packet_variance,
-
             "FIN Flag Count": flow["fin_count"],
             "SYN Flag Count": flow["syn_count"],
             "RST Flag Count": flow["rst_count"],
@@ -264,6 +259,9 @@ class FlowTracker:
             "ACK Flag Count": flow["ack_count"],
             "URG Flag Count": flow["urg_count"]
         }
+
+    def get_active_flow_count(self):
+        return len(self.flows)
 
     def get_completed_flows(self):
         current_time = time.time()

@@ -19,6 +19,10 @@ class MetricsTracker:
         self.total_alerts = 0
         self.alert_counts = {}
 
+        self.flows_analyzed = 0
+        self.flows_classified = 0
+        self.active_flows = 0
+
     def record_packet(self, protocol):
         self.total_packets += 1
 
@@ -26,7 +30,6 @@ class MetricsTracker:
             protocol = "OTHER"
 
         self.protocol_counts[protocol] += 1
-
         self.save_metrics()
 
     def record_alert(self, alert_type):
@@ -36,7 +39,18 @@ class MetricsTracker:
             self.alert_counts[alert_type] = 0
 
         self.alert_counts[alert_type] += 1
+        self.save_metrics()
 
+    def record_flow(self):
+        self.flows_analyzed += 1
+        self.save_metrics()
+
+    def record_classification(self):
+        self.flows_classified += 1
+        self.save_metrics()
+
+    def set_active_flows(self, count):
+        self.active_flows = count
         self.save_metrics()
 
     def get_metrics(self):
@@ -44,15 +58,14 @@ class MetricsTracker:
             "total_packets": self.total_packets,
             "protocol_counts": self.protocol_counts,
             "total_alerts": self.total_alerts,
-            "alert_counts": self.alert_counts
+            "alert_counts": self.alert_counts,
+            "flows_analyzed": self.flows_analyzed,
+            "flows_classified": self.flows_classified,
+            "active_flows": self.active_flows
         }
 
     def save_metrics(self):
         os.makedirs("logs", exist_ok=True)
 
         with open(METRICS_PATH, "w", encoding="utf-8") as metrics_file:
-            json.dump(
-                self.get_metrics(),
-                metrics_file,
-                indent=4
-            )
+            json.dump(self.get_metrics(), metrics_file, indent=4)

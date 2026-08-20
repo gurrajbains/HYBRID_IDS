@@ -1,6 +1,7 @@
 import json
 import os
 
+import pandas as pd
 import streamlit as st
 
 
@@ -14,75 +15,76 @@ st.set_page_config(
 
 METRICS_PATH = "logs/metrics.json"
 ALERTS_PATH = "logs/alerts.jsonl"
+FLOW_LOG_PATH = "logs/flows.jsonl"
+PREDICTION_LOG_PATH = "logs/ml_predictions.jsonl"
 MODEL_METRICS_PATH = "models/live_model_metrics.json"
+MODEL_PATH = "models/random_forest_live.joblib"
 
 
 # =========================================================
 # DATA
 # =========================================================
 
-def load_metrics():
-    default_metrics = {
-        "total_packets": 0,
-        "protocol_counts": {
-            "TCP": 0,
-            "UDP": 0,
-            "ICMP": 0,
-            "OTHER": 0
-        },
-        "total_alerts": 0,
-        "alert_counts": {}
-    }
-
-    if not os.path.exists(METRICS_PATH):
-        return default_metrics
+def load_json_file(file_path, default_value):
+    if not os.path.exists(file_path):
+        return default_value
 
     try:
-        with open(METRICS_PATH, "r", encoding="utf-8") as metrics_file:
-            return json.load(metrics_file)
+        with open(file_path, "r", encoding="utf-8") as file:
+            return json.load(file)
+
     except (json.JSONDecodeError, OSError):
-        return default_metrics
+        return default_value
 
 
-def load_alerts():
-    if not os.path.exists(ALERTS_PATH):
+def load_jsonl(file_path):
+    if not os.path.exists(file_path):
         return []
 
-    alerts = []
+    records = []
 
     try:
-        with open(ALERTS_PATH, "r", encoding="utf-8") as alert_file:
-            for line in alert_file:
+        with open(file_path, "r", encoding="utf-8") as file:
+            for line in file:
                 line = line.strip()
 
                 if not line:
                     continue
 
                 try:
-                    alerts.append(json.loads(line))
+                    records.append(json.loads(line))
                 except json.JSONDecodeError:
                     continue
 
     except OSError:
         return []
 
-    return alerts
+    return records
 
 
-def load_model_metrics():
-    if not os.path.exists(MODEL_METRICS_PATH):
-        return {}
+default_metrics = {
+    "total_packets": 0,
+    "protocol_counts": {
+        "TCP": 0,
+        "UDP": 0,
+        "ICMP": 0,
+        "OTHER": 0
+    },
+    "total_alerts": 0,
+    "alert_counts": {},
+    "flows_analyzed": 0,
+    "flows_classified": 0,
+    "active_flows": 0
+}
 
-    try:
-        with open(MODEL_METRICS_PATH, "r", encoding="utf-8") as metrics_file:
-            return json.load(metrics_file)
-    except (json.JSONDecodeError, OSError):
-        return {}
 
+metrics = load_json_file(METRICS_PATH, default_metrics)
+metrics = {**default_metrics, **metrics}
 
-metrics = load_metrics()
-alerts = load_alerts()
-model_metrics = load_model_metrics()
+alerts = load_jsonl(ALERTS_PATH)
+flow_records = load_jsonl(FLOW_LOG_PATH)
+predictions = load_jsonl(PREDICTION_LOG_PATH)
+model_metrics = load_json_file(MODEL_METRICS_PATH, {})
 
 
 # =========================================================
@@ -166,8 +168,12 @@ st.markdown(
     f"""
 <style>
 
+/* ---------------------------------------------------------
+   STREAMLIT CHROME
+--------------------------------------------------------- */
+
 [data-testid="stHeader"] {{
-    display: none !important;
+    background: transparent !important;
     height: 0 !important;
 }}
 
@@ -186,6 +192,11 @@ st.markdown(
 footer {{
     display: none !important;
 }}
+
+
+/* ---------------------------------------------------------
+   MAIN APP
+--------------------------------------------------------- */
 
 html,
 body,
@@ -211,12 +222,33 @@ body,
 }}
 
 
-/* SIDEBAR */
+/* ---------------------------------------------------------
+   SIDEBAR
+--------------------------------------------------------- */
 
 [data-testid="stSidebar"] {{
     background-color: {sidebar_background} !important;
-    border-right: 1px solid {border_color};
-    top: 0 !important;
+    border-right: 1px solid {border_color} !important;
+    transition:
+        width 0.2s ease,
+        min-width 0.2s ease,
+        transform 0.2s ease !important;
+}}
+
+[data-testid="stSidebar"][aria-expanded="true"] {{
+    width: 380px !important;
+    min-width: 380px !important;
+    transform: translateX(0) !important;
+}}
+
+[data-testid="stSidebar"][aria-expanded="false"] {{
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    transform: translateX(0) !important;
+    left: 0 !important;
+    margin-left: 0 !important;
+    border-right: 1px solid {border_color} !important;
 }}
 
 [data-testid="stSidebarContent"],
@@ -234,14 +266,111 @@ body,
     color: {text_color} !important;
 }}
 
+
+/* ---------------------------------------------------------
+   SIDEBAR COLLAPSED RAIL
+--------------------------------------------------------- */
+
+[data-testid="stSidebarHeader"] {{
+    background-color: {sidebar_background} !important;
+}}
+
+[data-testid="stSidebar"][aria-expanded="false"]
+[data-testid="stSidebarHeader"] {{
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    padding: 6px 0 !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+}}
+
+[data-testid="stSidebarCollapseButton"] {{
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 999999 !important;
+}}
+
+[data-testid="stSidebarCollapseButton"] button {{
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}}
+
+[data-testid="stSidebar"][aria-expanded="false"]
+[data-testid="stSidebarCollapseButton"] {{
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    top: 8px !important;
+    left: -13px !important;
+    width: 34px !important;
+    height: 34px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 999999 !important;
+}}
+
+[data-testid="stSidebar"][aria-expanded="false"]
+[data-testid="stSidebarCollapseButton"] button {{
+    width: 34px !important;
+    height: 34px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}}
+
+[data-testid="stSidebar"][aria-expanded="false"]
+[data-testid="stSidebarUserContent"] {{
+    display: none !important;
+}}
+
+[data-testid="stSidebar"][aria-expanded="false"]
+[data-testid="stSidebarContent"] {{
+    overflow: hidden !important;
+    width: 38px !important;
+}}
+
+[data-testid="collapsedControl"] {{
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    top: 8px !important;
+    left: 2px !important;
+    width: 34px !important;
+    height: 34px !important;
+    z-index: 999999 !important;
+}}
+
+[data-testid="collapsedControl"] button {{
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 34px !important;
+    height: 34px !important;
+    padding: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+}}
+
+
+/* ---------------------------------------------------------
+   RADIO / SELECT INPUTS
+--------------------------------------------------------- */
+
 [data-testid="stRadio"],
 [data-testid="stRadio"] label,
 [data-testid="stRadio"] p {{
     color: {text_color} !important;
 }}
-
-
-/* DROPDOWNS */
 
 [data-baseweb="select"] > div {{
     background-color: {input_background} !important;
@@ -275,7 +404,9 @@ body,
 }}
 
 
-/* HEADER */
+/* ---------------------------------------------------------
+   PAGE HEADER
+--------------------------------------------------------- */
 
 .page-header {{
     margin-top: 0;
@@ -305,7 +436,9 @@ body,
 }}
 
 
-/* SECTIONS */
+/* ---------------------------------------------------------
+   SECTIONS
+--------------------------------------------------------- */
 
 .section-title {{
     color: {text_color};
@@ -316,7 +449,9 @@ body,
 }}
 
 
-/* CARDS */
+/* ---------------------------------------------------------
+   METRIC CARDS
+--------------------------------------------------------- */
 
 .small-card {{
     height: 100px;
@@ -341,7 +476,9 @@ body,
 }}
 
 
-/* EMPTY GRAPH PANELS */
+/* ---------------------------------------------------------
+   PANELS
+--------------------------------------------------------- */
 
 .panel {{
     background-color: {panel_background};
@@ -372,7 +509,9 @@ body,
 }}
 
 
-/* ALERTS */
+/* ---------------------------------------------------------
+   ALERTS
+--------------------------------------------------------- */
 
 .alert-row {{
     background-color: {panel_background};
@@ -395,12 +534,32 @@ body,
     margin-top: 4px;
 }}
 
-.empty-table {{
-    height: 260px;
-    background-color: {panel_background};
+
+/* ---------------------------------------------------------
+   TABLES
+--------------------------------------------------------- */
+
+[data-testid="stDataFrame"] {{
     border: 1px solid {border_color};
     border-radius: 12px;
+    overflow: hidden;
 }}
+
+
+/* ---------------------------------------------------------
+   INFO BOXES
+--------------------------------------------------------- */
+
+[data-testid="stAlert"] {{
+    background-color: {panel_background} !important;
+    color: {text_color} !important;
+    border: 1px solid {border_color} !important;
+}}
+
+
+/* ---------------------------------------------------------
+   DIVIDERS
+--------------------------------------------------------- */
 
 hr {{
     border-color: {border_color} !important;
@@ -465,19 +624,15 @@ def render_alert(alert):
     st.markdown(html, unsafe_allow_html=True)
 
 
-def empty_table():
-    st.markdown(
-        '<div class="empty-table"></div>',
-        unsafe_allow_html=True
-    )
-
-
 # =========================================================
-# VALUES
+# CURRENT VALUES
 # =========================================================
 
 total_packets = metrics.get("total_packets", 0)
 total_alerts = metrics.get("total_alerts", 0)
+flows_analyzed = metrics.get("flows_analyzed", 0)
+flows_classified = metrics.get("flows_classified", 0)
+active_flows = metrics.get("active_flows", 0)
 
 protocol_counts = metrics.get("protocol_counts", {})
 
@@ -487,13 +642,14 @@ icmp_packets = protocol_counts.get("ICMP", 0)
 
 if total_alerts == 0:
     threat_level = "Normal"
+
 elif total_alerts <= 3:
     threat_level = "Elevated"
+
 else:
     threat_level = "High"
 
-model_loaded = os.path.exists("models/random_forest_live.joblib")
-
+model_loaded = os.path.exists(MODEL_PATH)
 model_status = "Loaded" if model_loaded else "Not Loaded"
 
 
@@ -516,23 +672,13 @@ if page == "Overview":
     status1, status2, status3 = st.columns(3)
 
     with status1:
-        metric_card(
-            "IDS Engine",
-            "Ready"
-        )
+        metric_card("IDS Engine", "Ready")
 
     with status2:
-        metric_card(
-            "Machine Learning Engine",
-            model_status
-        )
+        metric_card("Machine Learning Engine", model_status)
 
     with status3:
-        metric_card(
-            "Signature Engine",
-            "4 Detectors"
-        )
-
+        metric_card("Signature Engine", "4 Detectors")
 
     st.markdown(
         '<div class="section-title">Session Metrics</div>',
@@ -542,29 +688,16 @@ if page == "Overview":
     metric1, metric2, metric3, metric4 = st.columns(4)
 
     with metric1:
-        metric_card(
-            "Packets Analyzed",
-            f"{total_packets:,}"
-        )
+        metric_card("Packets Analyzed", f"{total_packets:,}")
 
     with metric2:
-        metric_card(
-            "Total Alerts",
-            f"{total_alerts:,}"
-        )
+        metric_card("Total Alerts", f"{total_alerts:,}")
 
     with metric3:
-        metric_card(
-            "Flows Analyzed",
-            "—"
-        )
+        metric_card("Flows Analyzed", f"{flows_analyzed:,}")
 
     with metric4:
-        metric_card(
-            "Current Threat Level",
-            threat_level
-        )
-
+        metric_card("Current Threat Level", threat_level)
 
     st.markdown(
         '<div class="section-title">Monitoring</div>',
@@ -585,7 +718,6 @@ if page == "Overview":
             "Signature and ML detection activity"
         )
 
-
     st.markdown(
         '<div class="section-title">Recent Alerts</div>',
         unsafe_allow_html=True
@@ -594,6 +726,7 @@ if page == "Overview":
     if alerts:
         for alert in reversed(alerts[-5:]):
             render_alert(alert)
+
     else:
         st.info("No security alerts have been recorded.")
 
@@ -632,12 +765,10 @@ elif page == "Alerts":
             ]
         )
 
-    attack_types = sorted(
-        {
-            alert.get("type", "Unknown")
-            for alert in alerts
-        }
-    )
+    attack_types = sorted({
+        alert.get("type", "Unknown")
+        for alert in alerts
+    })
 
     with filter3:
         attack_filter = st.selectbox(
@@ -676,6 +807,7 @@ elif page == "Alerts":
     if filtered_alerts:
         for alert in reversed(filtered_alerts):
             render_alert(alert)
+
     else:
         st.info("No alerts match the selected filters.")
 
@@ -694,29 +826,16 @@ elif page == "Network":
     metric1, metric2, metric3, metric4 = st.columns(4)
 
     with metric1:
-        metric_card(
-            "TCP Packets",
-            f"{tcp_packets:,}"
-        )
+        metric_card("TCP Packets", f"{tcp_packets:,}")
 
     with metric2:
-        metric_card(
-            "UDP Packets",
-            f"{udp_packets:,}"
-        )
+        metric_card("UDP Packets", f"{udp_packets:,}")
 
     with metric3:
-        metric_card(
-            "ICMP Packets",
-            f"{icmp_packets:,}"
-        )
+        metric_card("ICMP Packets", f"{icmp_packets:,}")
 
     with metric4:
-        metric_card(
-            "Active Flows",
-            "—"
-        )
-
+        metric_card("Active Flows", f"{active_flows:,}")
 
     st.markdown(
         '<div class="section-title">Traffic Analysis</div>',
@@ -737,13 +856,55 @@ elif page == "Network":
             "Network flow activity over time"
         )
 
-
     st.markdown(
-        '<div class="section-title">Flow Records</div>',
+        '<div class="section-title">Recent Flow Records</div>',
         unsafe_allow_html=True
     )
 
-    empty_table()
+    if flow_records:
+        flow_dataframe = pd.DataFrame(flow_records[-50:]).iloc[::-1]
+
+        display_columns = [
+            "timestamp",
+            "source_ip",
+            "source_port",
+            "destination_ip",
+            "destination_port",
+            "protocol",
+            "packet_count",
+            "total_bytes"
+        ]
+
+        display_columns = [
+            column
+            for column in display_columns
+            if column in flow_dataframe.columns
+        ]
+
+        flow_dataframe = flow_dataframe[display_columns]
+
+        flow_dataframe = flow_dataframe.rename(
+            columns={
+                "timestamp": "Time",
+                "source_ip": "Source IP",
+                "source_port": "Source Port",
+                "destination_ip": "Destination IP",
+                "destination_port": "Destination Port",
+                "protocol": "Protocol",
+                "packet_count": "Packets",
+                "total_bytes": "Bytes"
+            }
+        )
+
+        st.dataframe(
+            flow_dataframe,
+            use_container_width=True,
+            hide_index=True,
+            height=350
+        )
+
+    else:
+        st.info("No completed flow records have been recorded yet.")
 
 
 # =========================================================
@@ -759,45 +920,40 @@ elif page == "Machine Learning":
 
     accuracy = model_metrics.get("accuracy")
     macro_f1 = model_metrics.get("macro_f1")
+    weighted_f1 = model_metrics.get("weighted_f1")
 
-    if accuracy is not None:
-        accuracy_display = f"{accuracy * 100:.2f}%"
-    else:
-        accuracy_display = "—"
-
-    if macro_f1 is not None:
-        macro_f1_display = f"{macro_f1 * 100:.2f}%"
-    else:
-        macro_f1_display = "—"
+    accuracy_display = f"{accuracy * 100:.2f}%" if accuracy is not None else "—"
+    macro_f1_display = f"{macro_f1 * 100:.2f}%" if macro_f1 is not None else "—"
+    weighted_f1_display = f"{weighted_f1 * 100:.2f}%" if weighted_f1 is not None else "—"
 
     feature_count = model_metrics.get("features", 41)
 
     metric1, metric2, metric3, metric4 = st.columns(4)
 
     with metric1:
-        metric_card(
-            "Model Accuracy",
-            accuracy_display
-        )
+        metric_card("Model Accuracy", accuracy_display)
 
     with metric2:
-        metric_card(
-            "Macro F1",
-            macro_f1_display
-        )
+        metric_card("Macro F1", macro_f1_display)
 
     with metric3:
-        metric_card(
-            "Feature Count",
-            feature_count
-        )
+        metric_card("Feature Count", feature_count)
 
     with metric4:
-        metric_card(
-            "Flows Classified",
-            "—"
-        )
+        metric_card("Flows Classified", f"{flows_classified:,}")
 
+    st.markdown(
+        '<div class="section-title">Additional Model Metrics</div>',
+        unsafe_allow_html=True
+    )
+
+    extra1, extra2 = st.columns(2)
+
+    with extra1:
+        metric_card("Weighted F1", weighted_f1_display)
+
+    with extra2:
+        metric_card("Model", "Random Forest")
 
     st.markdown(
         '<div class="section-title">Model Analysis</div>',
@@ -818,10 +974,79 @@ elif page == "Machine Learning":
             "Model confidence across classified flows"
         )
 
-
     st.markdown(
         '<div class="section-title">Recent Predictions</div>',
         unsafe_allow_html=True
     )
 
-    empty_table()
+    prediction_filter = st.selectbox(
+        "Prediction",
+        [
+            "All",
+            "BENIGN",
+            "Suspicious Only"
+        ]
+    )
+
+    filtered_predictions = []
+
+    for prediction in predictions:
+        prediction_class = prediction.get("prediction", "Unknown")
+
+        if prediction_filter == "BENIGN" and prediction_class != "BENIGN":
+            continue
+
+        if prediction_filter == "Suspicious Only" and prediction_class == "BENIGN":
+            continue
+
+        filtered_predictions.append(prediction)
+
+    if filtered_predictions:
+        prediction_dataframe = pd.DataFrame(filtered_predictions[-50:]).iloc[::-1]
+
+        if "confidence" in prediction_dataframe.columns:
+            prediction_dataframe["confidence"] = prediction_dataframe["confidence"].apply(
+                lambda value: f"{value * 100:.2f}%"
+            )
+
+        display_columns = [
+            "timestamp",
+            "source_ip",
+            "source_port",
+            "destination_ip",
+            "destination_port",
+            "protocol",
+            "prediction",
+            "confidence"
+        ]
+
+        display_columns = [
+            column
+            for column in display_columns
+            if column in prediction_dataframe.columns
+        ]
+
+        prediction_dataframe = prediction_dataframe[display_columns]
+
+        prediction_dataframe = prediction_dataframe.rename(
+            columns={
+                "timestamp": "Time",
+                "source_ip": "Source IP",
+                "source_port": "Source Port",
+                "destination_ip": "Destination IP",
+                "destination_port": "Destination Port",
+                "protocol": "Protocol",
+                "prediction": "Prediction",
+                "confidence": "Confidence"
+            }
+        )
+
+        st.dataframe(
+            prediction_dataframe,
+            use_container_width=True,
+            hide_index=True,
+            height=400
+        )
+
+    else:
+        st.info("No ML predictions match the selected filter.")
