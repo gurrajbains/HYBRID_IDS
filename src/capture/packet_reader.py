@@ -4,7 +4,8 @@ import os
 from datetime import datetime
 
 from scapy.all import ICMP, IP, TCP, UDP, rdpcap, sniff
-
+from src.suricata.eve_reader import build_description
+from src.suricata.runner import run_suricata_pcap
 from src.alerts.alert_manager import create_alert as log_alert
 from src.detection.icmp_flood import IcmpFloodDetector
 from src.detection.port_scan import PortScanDetector
@@ -295,7 +296,26 @@ def print_metrics():
 
         for alert_type, count in metrics["alert_counts"].items():
             print(f"{alert_type}: {count}")
+def process_suricata_results(file_path):
+    print("\nRunning Suricata signature analysis...")
 
+    suricata_alerts = run_suricata_pcap(file_path)
+
+    for alert in suricata_alerts:
+         raise_alert(
+            alert["alert_type"],
+            alert["severity"].title(),
+            alert.get("src_ip") or "Unknown",
+            alert.get("dst_ip") or "Unknown",
+            build_description(alert),
+            "Suricata",
+            alert.get("protocol") or "Unknown",
+            alert.get("timestamp")
+        )
+
+    print(f"Suricata alerts added to unified IDS: {len(suricata_alerts)}")
+
+    return suricata_alerts
 
 def analyze_pcap(file_path):
     print(f"Analyzing PCAP file: {file_path}")
@@ -308,8 +328,9 @@ def analyze_pcap(file_path):
 
     finally:
         flush_remaining_flows()
-        print_metrics()
 
+    process_suricata_results(file_path)
+    print_metrics()
 
 def capture_live():
     print(f"Starting live capture on: {INTERFACE_NAME}")
