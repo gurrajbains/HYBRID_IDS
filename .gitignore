@@ -10,6 +10,9 @@ models/*.joblib
 
 pcaps/*.pcap
 pcaps/*.pcapng
+
 suricata-temp/
 rules/suricata.rules
 rules/suricata-full.rules
+
+evaluation/datasets/

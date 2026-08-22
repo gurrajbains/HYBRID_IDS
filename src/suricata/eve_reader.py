@@ -1,20 +1,8 @@
 import json
 from pathlib import Path
 
-from src.alerts.alert_manager import create_alert
-
 
 DEFAULT_EVE_PATH = Path("logs/suricata/eve.json")
-
-
-def convert_severity(severity):
-    severity_map = {
-        1: "HIGH",
-        2: "MEDIUM",
-        3: "LOW"
-    }
-
-    return severity_map.get(severity, "UNKNOWN")
 
 
 def normalize_suricata_alert(event):
@@ -22,16 +10,17 @@ def normalize_suricata_alert(event):
 
     return {
         "timestamp": event.get("timestamp"),
+        "source": "Suricata",
         "alert_type": alert_data.get("signature", "Unknown Suricata Alert"),
-        "severity": convert_severity(alert_data.get("severity")),
         "src_ip": event.get("src_ip"),
         "src_port": event.get("src_port"),
-        "dst_ip": event.get("dest_ip"),
-        "dst_port": event.get("dest_port"),
+        "dest_ip": event.get("dest_ip"),
+        "dest_port": event.get("dest_port"),
         "protocol": event.get("proto"),
+        "severity": alert_data.get("severity"),
         "signature_id": alert_data.get("signature_id"),
         "category": alert_data.get("category"),
-        "action": alert_data.get("action")
+        "action": alert_data.get("action"),
     }
 
 
@@ -62,43 +51,6 @@ def read_suricata_alerts(eve_path=DEFAULT_EVE_PATH):
     return alerts
 
 
-def build_description(alert):
-    src_port = alert.get("src_port")
-    dst_port = alert.get("dst_port")
-    signature_id = alert.get("signature_id")
-    category = alert.get("category")
-    action = alert.get("action")
-
-    return (
-        f"Suricata signature {signature_id} detected traffic "
-        f"from {alert['src_ip']}:{src_port} to "
-        f"{alert['dst_ip']}:{dst_port}. "
-        f"Category: {category or 'Unknown'}. "
-        f"Action: {action or 'Unknown'}."
-    )
-
-
-def import_suricata_alerts(eve_path=DEFAULT_EVE_PATH):
-    alerts = read_suricata_alerts(eve_path)
-    imported_alerts = []
-
-    for alert in alerts:
-        logged_alert = create_alert(
-            alert_type=alert["alert_type"],
-            severity=alert["severity"],
-            src_ip=alert["src_ip"],
-            dst_ip=alert["dst_ip"],
-            description=build_description(alert),
-            detector="Suricata",
-            protocol=alert["protocol"],
-            timestamp=alert["timestamp"]
-        )
-
-        imported_alerts.append(logged_alert)
-
-    return imported_alerts
-
-
 def print_suricata_summary(alerts):
     print(f"Suricata alerts: {len(alerts)}")
 
@@ -107,9 +59,9 @@ def print_suricata_summary(alerts):
             f"[{alert['timestamp']}] "
             f"{alert['alert_type']} | "
             f"{alert['src_ip']}:{alert['src_port']} -> "
-            f"{alert['dst_ip']}:{alert['dst_port']} | "
+            f"{alert['dest_ip']}:{alert['dest_port']} | "
             f"{alert['protocol']} | "
-            f"{alert['severity']}"
+            f"Severity {alert['severity']}"
         )
 
 
