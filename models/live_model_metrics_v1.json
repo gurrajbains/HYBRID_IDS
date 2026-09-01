@@ -1,0 +1,141 @@
+{
+    "model": "RandomForestClassifier",
+    "dataset": "CICIDS2017",
+    "purpose": "Live-compatible Hybrid IDS model",
+    "samples": 895993,
+    "features": 41,
+    "accuracy": 0.9976004330381308,
+    "macro_f1": 0.9679803361985482,
+    "weighted_f1": 0.997613418457927,
+    "classes": [
+        "BENIGN",
+        "Bot",
+        "BruteForce",
+        "DDoS",
+        "DoS",
+        "PortScan",
+        "WebAttack"
+    ],
+    "classification_report": {
+        "BENIGN": {
+            "precision": 0.9968145209760788,
+            "recall": 0.9951,
+            "f1-score": 0.9959565226094441,
+            "support": 50000.0
+        },
+        "Bot": {
+            "precision": 0.7913669064748201,
+            "recall": 0.8439897698209718,
+            "f1-score": 0.8168316831683168,
+            "support": 391.0
+        },
+        "BruteForce": {
+            "precision": 0.9981916817359855,
+            "recall": 0.9974701843151428,
+            "f1-score": 0.9978308026030369,
+            "support": 2767.0
+        },
+        "DDoS": {
+            "precision": 0.9998828079221844,
+            "recall": 0.9996485061511423,
+            "f1-score": 0.9997656433091164,
+            "support": 25605.0
+        },
+        "DoS": {
+            "precision": 0.9972827715729955,
+            "recall": 0.9983,
+            "f1-score": 0.997791126525472,
+            "support": 50000.0
+        },
+        "PortScan": {
+            "precision": 0.9995201247675605,
+            "recall": 0.99978,
+            "f1-score": 0.9996500454940858,
+            "support": 50000.0
+        },
+        "WebAttack": {
+            "precision": 0.9636363636363636,
+            "recall": 0.9724770642201835,
+            "f1-score": 0.9680365296803652,
+            "support": 436.0
+        },
+        "accuracy": 0.9976004330381308,
+        "macro avg": {
+            "precision": 0.9638135967265697,
+            "recall": 0.9723950749296344,
+            "f1-score": 0.9679803361985482,
+            "support": 179199.0
+        },
+        "weighted avg": {
+            "precision": 0.9976307706015093,
+            "recall": 0.9976004330381308,
+            "f1-score": 0.997613418457927,
+            "support": 179199.0
+        }
+    },
+    "confusion_matrix": [
+        [
+            49755,
+            87,
+            5,
+            3,
+            128,
+            21,
+            1
+        ],
+        [
+            61,
+            330,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        [
+            6,
+            0,
+            2760,
+            0,
+            0,
+            0,
+            1
+        ],
+        [
+            9,
+            0,
+            0,
+            25596,
+            0,
+            0,
+            0
+        ],
+        [
+            73,
+            0,
+            0,
+            0,
+            49915,
+            0,
+            12
+        ],
+        [
+            4,
+            0,
+            0,
+            0,
+            5,
+            49989,
+            2
+        ],
+        [
+            6,
+            0,
+            0,
+            0,
+            3,
+            3,
+            424
+        ]
+    ]
+}

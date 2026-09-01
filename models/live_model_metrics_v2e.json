@@ -1,0 +1,159 @@
+{
+    "version": "V2-E",
+    "model": "RandomForestClassifier",
+    "dataset": "CICIDS2017",
+    "purpose": "Tuned live-compatible Hybrid IDS model",
+    "comparison_baseline": "Hybrid IDS V1",
+    "samples": 895993,
+    "features": 41,
+    "max_samples_per_class": 250000,
+    "test_size": 0.2,
+    "random_state": 42,
+    "training_parameters": {
+        "n_estimators": 500,
+        "max_depth": 22,
+        "min_samples_split": 5,
+        "min_samples_leaf": 1,
+        "max_features": 0.5,
+        "class_weight": "balanced_subsample",
+        "bootstrap": true,
+        "random_state": 42,
+        "n_jobs": -1
+    },
+    "training_time_seconds": 360.7766330000013,
+    "accuracy": 0.9972879312942594,
+    "macro_f1": 0.9650775703093252,
+    "weighted_f1": 0.9973805765579848,
+    "classes": [
+        "BENIGN",
+        "Bot",
+        "BruteForce",
+        "DDoS",
+        "DoS",
+        "PortScan",
+        "WebAttack"
+    ],
+    "classification_report": {
+        "BENIGN": {
+            "precision": 0.9977495127293187,
+            "recall": 0.9931,
+            "f1-score": 0.9954193270319845,
+            "support": 50000.0
+        },
+        "Bot": {
+            "precision": 0.6768402154398564,
+            "recall": 0.9641943734015346,
+            "f1-score": 0.7953586497890295,
+            "support": 391.0
+        },
+        "BruteForce": {
+            "precision": 0.9967509025270758,
+            "recall": 0.9978315865558366,
+            "f1-score": 0.9972909517789417,
+            "support": 2767.0
+        },
+        "DDoS": {
+            "precision": 0.9997656707674283,
+            "recall": 0.9997656707674283,
+            "f1-score": 0.9997656707674283,
+            "support": 25605.0
+        },
+        "DoS": {
+            "precision": 0.9972026854219949,
+            "recall": 0.99816,
+            "f1-score": 0.9976811130657285,
+            "support": 50000.0
+        },
+        "PortScan": {
+            "precision": 0.9995400919816037,
+            "recall": 0.99974,
+            "f1-score": 0.9996400359964004,
+            "support": 50000.0
+        },
+        "WebAttack": {
+            "precision": 0.9638009049773756,
+            "recall": 0.9770642201834863,
+            "f1-score": 0.9703872437357631,
+            "support": 436.0
+        },
+        "accuracy": 0.9972879312942594,
+        "macro avg": {
+            "precision": 0.9473785691206646,
+            "recall": 0.9899794072726122,
+            "f1-score": 0.9650775703093252,
+            "support": 179199.0
+        },
+        "weighted avg": {
+            "precision": 0.997586403789895,
+            "recall": 0.9972879312942594,
+            "f1-score": 0.9973805765579848,
+            "support": 179199.0
+        }
+    },
+    "confusion_matrix": [
+        [
+            49655,
+            180,
+            9,
+            4,
+            130,
+            21,
+            1
+        ],
+        [
+            14,
+            377,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        [
+            5,
+            0,
+            2761,
+            0,
+            0,
+            0,
+            1
+        ],
+        [
+            6,
+            0,
+            0,
+            25599,
+            0,
+            0,
+            0
+        ],
+        [
+            77,
+            0,
+            0,
+            2,
+            49908,
+            1,
+            12
+        ],
+        [
+            4,
+            0,
+            0,
+            0,
+            7,
+            49987,
+            2
+        ],
+        [
+            6,
+            0,
+            0,
+            0,
+            3,
+            1,
+            426
+        ]
+    ],
+    "inference_time_seconds": 1.2188132999581285
+}
