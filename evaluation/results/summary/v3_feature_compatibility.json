@@ -1,0 +1,113 @@
+{
+    "common_features": [
+        "flow_duration",
+        "fwd_packets",
+        "bwd_packets",
+        "fwd_bytes",
+        "bwd_bytes",
+        "total_packets",
+        "total_bytes",
+        "packets_per_second",
+        "bytes_per_second",
+        "fwd_mean_packet_bytes",
+        "bwd_mean_packet_bytes"
+    ],
+    "datasets": [
+        {
+            "dataset": "CIC-IDS-2017",
+            "duration_unit": "microseconds",
+            "base_features": [
+                {
+                    "common_feature": "flow_duration",
+                    "source_column": "Flow Duration",
+                    "exists": true
+                },
+                {
+                    "common_feature": "fwd_packets",
+                    "source_column": "Total Fwd Packets",
+                    "exists": true
+                },
+                {
+                    "common_feature": "bwd_packets",
+                    "source_column": "Total Backward Packets",
+                    "exists": true
+                },
+                {
+                    "common_feature": "fwd_bytes",
+                    "source_column": "Total Length of Fwd Packets",
+                    "exists": true
+                },
+                {
+                    "common_feature": "bwd_bytes",
+                    "source_column": "Total Length of Bwd Packets",
+                    "exists": true
+                }
+            ],
+            "compatible": true
+        },
+        {
+            "dataset": "CSE-CIC-IDS2018",
+            "duration_unit": "microseconds",
+            "base_features": [
+                {
+                    "common_feature": "flow_duration",
+                    "source_column": "Flow Duration",
+                    "exists": true
+                },
+                {
+                    "common_feature": "fwd_packets",
+                    "source_column": "Tot Fwd Pkts",
+                    "exists": true
+                },
+                {
+                    "common_feature": "bwd_packets",
+                    "source_column": "Tot Bwd Pkts",
+                    "exists": true
+                },
+                {
+                    "common_feature": "fwd_bytes",
+                    "source_column": "TotLen Fwd Pkts",
+                    "exists": true
+                },
+                {
+                    "common_feature": "bwd_bytes",
+                    "source_column": "TotLen Bwd Pkts",
+                    "exists": true
+                }
+            ],
+            "compatible": true
+        },
+        {
+            "dataset": "UNSW-NB15",
+            "duration_unit": "seconds",
+            "base_features": [
+                {
+                    "common_feature": "flow_duration",
+                    "source_column": "dur",
+                    "exists": true
+                },
+                {
+                    "common_feature": "fwd_packets",
+                    "source_column": "spkts",
+                    "exists": true
+                },
+                {
+                    "common_feature": "bwd_packets",
+                    "source_column": "dpkts",
+                    "exists": true
+                },
+                {
+                    "common_feature": "fwd_bytes",
+                    "source_column": "sbytes",
+                    "exists": true
+                },
+                {
+                    "common_feature": "bwd_bytes",
+                    "source_column": "dbytes",
+                    "exists": true
+                }
+            ],
+            "compatible": true
+        }
+    ]
+}

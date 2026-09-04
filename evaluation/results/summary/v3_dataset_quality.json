@@ -1,0 +1,428 @@
+[
+    {
+        "dataset": "CIC-IDS-2017",
+        "role": "training",
+        "path": "data\\cicids2017_multiclass.csv",
+        "mapping": "cicids2017",
+        "label_column": "Label",
+        "total_rows": 3113972,
+        "usable_rows": 3113972,
+        "repeated_header_rows": 0,
+        "zero_duration_rows": 0,
+        "negative_duration_rows": 151,
+        "missing_duration_rows": 0,
+        "invalid_common_rows": 151,
+        "label_counts": {
+            "BENIGN": 2398612,
+            "Bot": 1956,
+            "BruteForce": 13832,
+            "DDoS": 128025,
+            "DoS": 251723,
+            "Infiltration": 36,
+            "PortScan": 317608,
+            "WebAttack": 2180
+        },
+        "invalid_by_label": {
+            "BENIGN": 151
+        },
+        "nonpositive_duration_by_label": {
+            "BENIGN": 151
+        },
+        "feature_missing": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 151,
+            "bytes_per_second": 151,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        },
+        "feature_negative": {
+            "flow_duration": 151,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        }
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Wednesday-14-02-2018_TrafficForML_CICFlowMeter",
+        "role": "training",
+        "path": "evaluation\\datasets\\CSE-CIC-IDS2018\\Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv",
+        "mapping": "cse_cic_ids2018",
+        "label_column": "Label",
+        "total_rows": 1048575,
+        "usable_rows": 1048575,
+        "repeated_header_rows": 0,
+        "zero_duration_rows": 3824,
+        "negative_duration_rows": 5,
+        "missing_duration_rows": 0,
+        "invalid_common_rows": 3829,
+        "label_counts": {
+            "Benign": 667626,
+            "FTP-BruteForce": 193360,
+            "SSH-Bruteforce": 187589
+        },
+        "invalid_by_label": {
+            "Benign": 3823,
+            "FTP-BruteForce": 6
+        },
+        "nonpositive_duration_by_label": {
+            "Benign": 3823,
+            "FTP-BruteForce": 6
+        },
+        "feature_missing": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 3829,
+            "bytes_per_second": 3829,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        },
+        "feature_negative": {
+            "flow_duration": 5,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        }
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Thursday-15-02-2018_TrafficForML_CICFlowMeter",
+        "role": "training",
+        "path": "evaluation\\datasets\\CSE-CIC-IDS2018\\Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv",
+        "mapping": "cse_cic_ids2018",
+        "label_column": "Label",
+        "total_rows": 1048575,
+        "usable_rows": 1048575,
+        "repeated_header_rows": 0,
+        "zero_duration_rows": 8027,
+        "negative_duration_rows": 0,
+        "missing_duration_rows": 0,
+        "invalid_common_rows": 8027,
+        "label_counts": {
+            "Benign": 996077,
+            "DoS attacks-GoldenEye": 41508,
+            "DoS attacks-Slowloris": 10990
+        },
+        "invalid_by_label": {
+            "Benign": 8027
+        },
+        "nonpositive_duration_by_label": {
+            "Benign": 8027
+        },
+        "feature_missing": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 8027,
+            "bytes_per_second": 8027,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        },
+        "feature_negative": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        }
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Friday-16-02-2018_TrafficForML_CICFlowMeter",
+        "role": "training",
+        "path": "evaluation\\datasets\\CSE-CIC-IDS2018\\Friday-16-02-2018_TrafficForML_CICFlowMeter.csv",
+        "mapping": "cse_cic_ids2018",
+        "label_column": "Label",
+        "total_rows": 1048575,
+        "usable_rows": 1048574,
+        "repeated_header_rows": 1,
+        "zero_duration_rows": 0,
+        "negative_duration_rows": 0,
+        "missing_duration_rows": 0,
+        "invalid_common_rows": 0,
+        "label_counts": {
+            "Benign": 446772,
+            "DoS attacks-Hulk": 461912,
+            "DoS attacks-SlowHTTPTest": 139890
+        },
+        "invalid_by_label": {},
+        "nonpositive_duration_by_label": {},
+        "feature_missing": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        },
+        "feature_negative": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        }
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Wednesday-21-02-2018_TrafficForML_CICFlowMeter",
+        "role": "training",
+        "path": "evaluation\\datasets\\CSE-CIC-IDS2018\\Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv",
+        "mapping": "cse_cic_ids2018",
+        "label_column": "Label",
+        "total_rows": 1048575,
+        "usable_rows": 1048575,
+        "repeated_header_rows": 0,
+        "zero_duration_rows": 0,
+        "negative_duration_rows": 0,
+        "missing_duration_rows": 0,
+        "invalid_common_rows": 0,
+        "label_counts": {
+            "Benign": 360833,
+            "DDOS attack-HOIC": 686012,
+            "DDOS attack-LOIC-UDP": 1730
+        },
+        "invalid_by_label": {},
+        "nonpositive_duration_by_label": {},
+        "feature_missing": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        },
+        "feature_negative": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        }
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Thursday-01-03-2018_TrafficForML_CICFlowMeter",
+        "role": "training",
+        "path": "evaluation\\datasets\\CSE-CIC-IDS2018\\Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv",
+        "mapping": "cse_cic_ids2018",
+        "label_column": "Label",
+        "total_rows": 331125,
+        "usable_rows": 331100,
+        "repeated_header_rows": 25,
+        "zero_duration_rows": 2919,
+        "negative_duration_rows": 0,
+        "missing_duration_rows": 0,
+        "invalid_common_rows": 2919,
+        "label_counts": {
+            "Benign": 238037,
+            "Infilteration": 93063
+        },
+        "invalid_by_label": {
+            "Benign": 2259,
+            "Infilteration": 660
+        },
+        "nonpositive_duration_by_label": {
+            "Benign": 2259,
+            "Infilteration": 660
+        },
+        "feature_missing": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 2919,
+            "bytes_per_second": 2919,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        },
+        "feature_negative": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        }
+    },
+    {
+        "dataset": "UNSW-NB15 \u2014 UNSW_NB15_training-set",
+        "role": "training",
+        "path": "evaluation\\datasets\\UNSW-NB15\\UNSW_NB15_training-set.csv",
+        "mapping": "unsw_nb15",
+        "label_column": "attack_cat",
+        "total_rows": 175341,
+        "usable_rows": 175341,
+        "repeated_header_rows": 0,
+        "zero_duration_rows": 2657,
+        "negative_duration_rows": 0,
+        "missing_duration_rows": 0,
+        "invalid_common_rows": 2657,
+        "label_counts": {
+            "Analysis": 2000,
+            "Backdoor": 1746,
+            "DoS": 12264,
+            "Exploits": 33393,
+            "Fuzzers": 18184,
+            "Generic": 40000,
+            "Normal": 56000,
+            "Reconnaissance": 10491,
+            "Shellcode": 1133,
+            "Worms": 130
+        },
+        "invalid_by_label": {
+            "Analysis": 1,
+            "Backdoor": 1,
+            "DoS": 8,
+            "Exploits": 8,
+            "Fuzzers": 6,
+            "Normal": 2630,
+            "Reconnaissance": 3
+        },
+        "nonpositive_duration_by_label": {
+            "Analysis": 1,
+            "Backdoor": 1,
+            "DoS": 8,
+            "Exploits": 8,
+            "Fuzzers": 6,
+            "Normal": 2630,
+            "Reconnaissance": 3
+        },
+        "feature_missing": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 2657,
+            "bytes_per_second": 2657,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        },
+        "feature_negative": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        }
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Tuesday-20-02-2018_TrafficForML_CICFlowMeter",
+        "role": "development",
+        "path": "evaluation\\datasets\\CSE-CIC-IDS2018\\Tuesday-20-02-2018_TrafficForML_CICFlowMeter.csv",
+        "mapping": "cse_cic_ids2018",
+        "label_column": "Label",
+        "total_rows": 7948748,
+        "usable_rows": 7948748,
+        "repeated_header_rows": 0,
+        "zero_duration_rows": 59453,
+        "negative_duration_rows": 0,
+        "missing_duration_rows": 0,
+        "invalid_common_rows": 59453,
+        "label_counts": {
+            "Benign": 7372557,
+            "DDoS attacks-LOIC-HTTP": 576191
+        },
+        "invalid_by_label": {
+            "Benign": 59453
+        },
+        "nonpositive_duration_by_label": {
+            "Benign": 59453
+        },
+        "feature_missing": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 59453,
+            "bytes_per_second": 59453,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        },
+        "feature_negative": {
+            "flow_duration": 0,
+            "fwd_packets": 0,
+            "bwd_packets": 0,
+            "fwd_bytes": 0,
+            "bwd_bytes": 0,
+            "total_packets": 0,
+            "total_bytes": 0,
+            "packets_per_second": 0,
+            "bytes_per_second": 0,
+            "fwd_mean_packet_bytes": 0,
+            "bwd_mean_packet_bytes": 0
+        }
+    }
+]

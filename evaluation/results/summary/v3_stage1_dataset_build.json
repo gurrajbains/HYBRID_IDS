@@ -1,0 +1,114 @@
+{
+    "random_state": 42,
+    "max_rows_per_dataset_class": 100000,
+    "training_sources": {
+        "cicids2017": [
+            "data/cicids2017_multiclass.csv"
+        ],
+        "cse_cic_ids2018": [
+            "Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv",
+            "Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv",
+            "Friday-16-02-2018_TrafficForML_CICFlowMeter.csv",
+            "Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv",
+            "Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv"
+        ],
+        "unsw_nb15": [
+            "UNSW_NB15_training-set.csv"
+        ]
+    },
+    "datasets": {
+        "cicids2017": {
+            "rows_observed": 3113972,
+            "header_rows_removed": 0,
+            "benign_observed": 2398612,
+            "attack_observed": 715360
+        },
+        "cse_cic_ids2018": {
+            "rows_observed": 4525399,
+            "header_rows_removed": 26,
+            "benign_observed": 2709345,
+            "attack_observed": 1816054
+        },
+        "unsw_nb15": {
+            "rows_observed": 175341,
+            "header_rows_removed": 0,
+            "benign_observed": 56000,
+            "attack_observed": 119341
+        }
+    },
+    "feature_sets": {
+        "A": {
+            "features": [
+                "flow_duration",
+                "fwd_packets",
+                "bwd_packets",
+                "fwd_bytes",
+                "bwd_bytes"
+            ],
+            "rows": 556000,
+            "rows_removed_for_invalid_features": 0,
+            "binary_distribution": {
+                "ATTACK": 300000,
+                "BENIGN": 256000
+            },
+            "source_distribution": {
+                "cicids2017": 200000,
+                "cse_cic_ids2018": 200000,
+                "unsw_nb15": 156000
+            },
+            "output": "data\\v3\\stage1_feature_set_a.csv"
+        },
+        "B": {
+            "features": [
+                "flow_duration",
+                "fwd_packets",
+                "bwd_packets",
+                "fwd_bytes",
+                "bwd_bytes",
+                "total_packets",
+                "total_bytes",
+                "fwd_mean_packet_bytes",
+                "bwd_mean_packet_bytes"
+            ],
+            "rows": 556000,
+            "rows_removed_for_invalid_features": 0,
+            "binary_distribution": {
+                "ATTACK": 300000,
+                "BENIGN": 256000
+            },
+            "source_distribution": {
+                "cicids2017": 200000,
+                "cse_cic_ids2018": 200000,
+                "unsw_nb15": 156000
+            },
+            "output": "data\\v3\\stage1_feature_set_b.csv"
+        },
+        "C": {
+            "features": [
+                "flow_duration",
+                "fwd_packets",
+                "bwd_packets",
+                "fwd_bytes",
+                "bwd_bytes",
+                "total_packets",
+                "total_bytes",
+                "fwd_mean_packet_bytes",
+                "bwd_mean_packet_bytes",
+                "packets_per_second",
+                "bytes_per_second"
+            ],
+            "rows": 552196,
+            "rows_removed_for_invalid_features": 3804,
+            "binary_distribution": {
+                "ATTACK": 299616,
+                "BENIGN": 252580
+            },
+            "source_distribution": {
+                "cicids2017": 199994,
+                "cse_cic_ids2018": 198852,
+                "unsw_nb15": 153350
+            },
+            "output": "data\\v3\\stage1_feature_set_c.csv"
+        }
+    }
+}

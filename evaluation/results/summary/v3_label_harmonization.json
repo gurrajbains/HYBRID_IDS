@@ -1,0 +1,376 @@
+[
+    {
+        "dataset": "CIC-IDS-2017",
+        "dataset_key": "cicids2017",
+        "binary_counts": {
+            "BENIGN": 2398612,
+            "ATTACK": 715360
+        },
+        "family_counts": {
+            "BENIGN": 2398612,
+            "Bot": 1956,
+            "BruteForce": 13832,
+            "DDoS": 128025,
+            "DoS": 251723,
+            "Infiltration": 36,
+            "Reconnaissance": 317608,
+            "WebAttack": 2180
+        },
+        "stage2_trainable_rows": 715360,
+        "unmapped_attack_rows": 0,
+        "mappings": [
+            {
+                "raw_label": "BENIGN",
+                "count": 2398612,
+                "binary_label": "BENIGN",
+                "family_label": "BENIGN",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "Bot",
+                "count": 1956,
+                "binary_label": "ATTACK",
+                "family_label": "Bot",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "BruteForce",
+                "count": 13832,
+                "binary_label": "ATTACK",
+                "family_label": "BruteForce",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "DDoS",
+                "count": 128025,
+                "binary_label": "ATTACK",
+                "family_label": "DDoS",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "DoS",
+                "count": 251723,
+                "binary_label": "ATTACK",
+                "family_label": "DoS",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "Infiltration",
+                "count": 36,
+                "binary_label": "ATTACK",
+                "family_label": "Infiltration",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "PortScan",
+                "count": 317608,
+                "binary_label": "ATTACK",
+                "family_label": "Reconnaissance",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "WebAttack",
+                "count": 2180,
+                "binary_label": "ATTACK",
+                "family_label": "WebAttack",
+                "stage2_trainable": true
+            }
+        ]
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Wednesday-14-02-2018_TrafficForML_CICFlowMeter",
+        "dataset_key": "cse_cic_ids2018",
+        "binary_counts": {
+            "BENIGN": 667626,
+            "ATTACK": 380949
+        },
+        "family_counts": {
+            "BENIGN": 667626,
+            "BruteForce": 380949
+        },
+        "stage2_trainable_rows": 380949,
+        "unmapped_attack_rows": 0,
+        "mappings": [
+            {
+                "raw_label": "Benign",
+                "count": 667626,
+                "binary_label": "BENIGN",
+                "family_label": "BENIGN",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "FTP-BruteForce",
+                "count": 193360,
+                "binary_label": "ATTACK",
+                "family_label": "BruteForce",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "SSH-Bruteforce",
+                "count": 187589,
+                "binary_label": "ATTACK",
+                "family_label": "BruteForce",
+                "stage2_trainable": true
+            }
+        ]
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Thursday-15-02-2018_TrafficForML_CICFlowMeter",
+        "dataset_key": "cse_cic_ids2018",
+        "binary_counts": {
+            "BENIGN": 996077,
+            "ATTACK": 52498
+        },
+        "family_counts": {
+            "BENIGN": 996077,
+            "DoS": 52498
+        },
+        "stage2_trainable_rows": 52498,
+        "unmapped_attack_rows": 0,
+        "mappings": [
+            {
+                "raw_label": "Benign",
+                "count": 996077,
+                "binary_label": "BENIGN",
+                "family_label": "BENIGN",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "DoS attacks-GoldenEye",
+                "count": 41508,
+                "binary_label": "ATTACK",
+                "family_label": "DoS",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "DoS attacks-Slowloris",
+                "count": 10990,
+                "binary_label": "ATTACK",
+                "family_label": "DoS",
+                "stage2_trainable": true
+            }
+        ]
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Friday-16-02-2018_TrafficForML_CICFlowMeter",
+        "dataset_key": "cse_cic_ids2018",
+        "binary_counts": {
+            "BENIGN": 446772,
+            "ATTACK": 601802
+        },
+        "family_counts": {
+            "BENIGN": 446772,
+            "DoS": 601802
+        },
+        "stage2_trainable_rows": 601802,
+        "unmapped_attack_rows": 0,
+        "mappings": [
+            {
+                "raw_label": "Benign",
+                "count": 446772,
+                "binary_label": "BENIGN",
+                "family_label": "BENIGN",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "DoS attacks-Hulk",
+                "count": 461912,
+                "binary_label": "ATTACK",
+                "family_label": "DoS",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "DoS attacks-SlowHTTPTest",
+                "count": 139890,
+                "binary_label": "ATTACK",
+                "family_label": "DoS",
+                "stage2_trainable": true
+            }
+        ]
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Wednesday-21-02-2018_TrafficForML_CICFlowMeter",
+        "dataset_key": "cse_cic_ids2018",
+        "binary_counts": {
+            "BENIGN": 360833,
+            "ATTACK": 687742
+        },
+        "family_counts": {
+            "BENIGN": 360833,
+            "DDoS": 687742
+        },
+        "stage2_trainable_rows": 687742,
+        "unmapped_attack_rows": 0,
+        "mappings": [
+            {
+                "raw_label": "Benign",
+                "count": 360833,
+                "binary_label": "BENIGN",
+                "family_label": "BENIGN",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "DDOS attack-HOIC",
+                "count": 686012,
+                "binary_label": "ATTACK",
+                "family_label": "DDoS",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "DDOS attack-LOIC-UDP",
+                "count": 1730,
+                "binary_label": "ATTACK",
+                "family_label": "DDoS",
+                "stage2_trainable": true
+            }
+        ]
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Thursday-01-03-2018_TrafficForML_CICFlowMeter",
+        "dataset_key": "cse_cic_ids2018",
+        "binary_counts": {
+            "BENIGN": 238037,
+            "ATTACK": 93063
+        },
+        "family_counts": {
+            "BENIGN": 238037,
+            "Infiltration": 93063
+        },
+        "stage2_trainable_rows": 93063,
+        "unmapped_attack_rows": 0,
+        "mappings": [
+            {
+                "raw_label": "Benign",
+                "count": 238037,
+                "binary_label": "BENIGN",
+                "family_label": "BENIGN",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "Infilteration",
+                "count": 93063,
+                "binary_label": "ATTACK",
+                "family_label": "Infiltration",
+                "stage2_trainable": true
+            }
+        ]
+    },
+    {
+        "dataset": "UNSW-NB15 \u2014 UNSW_NB15_training-set",
+        "dataset_key": "unsw_nb15",
+        "binary_counts": {
+            "ATTACK": 119341,
+            "BENIGN": 56000
+        },
+        "family_counts": {
+            "UNMAPPED_ATTACK": 96586,
+            "DoS": 12264,
+            "BENIGN": 56000,
+            "Reconnaissance": 10491
+        },
+        "stage2_trainable_rows": 22755,
+        "unmapped_attack_rows": 96586,
+        "mappings": [
+            {
+                "raw_label": "Analysis",
+                "count": 2000,
+                "binary_label": "ATTACK",
+                "family_label": "UNMAPPED_ATTACK",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "Backdoor",
+                "count": 1746,
+                "binary_label": "ATTACK",
+                "family_label": "UNMAPPED_ATTACK",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "DoS",
+                "count": 12264,
+                "binary_label": "ATTACK",
+                "family_label": "DoS",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "Exploits",
+                "count": 33393,
+                "binary_label": "ATTACK",
+                "family_label": "UNMAPPED_ATTACK",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "Fuzzers",
+                "count": 18184,
+                "binary_label": "ATTACK",
+                "family_label": "UNMAPPED_ATTACK",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "Generic",
+                "count": 40000,
+                "binary_label": "ATTACK",
+                "family_label": "UNMAPPED_ATTACK",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "Normal",
+                "count": 56000,
+                "binary_label": "BENIGN",
+                "family_label": "BENIGN",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "Reconnaissance",
+                "count": 10491,
+                "binary_label": "ATTACK",
+                "family_label": "Reconnaissance",
+                "stage2_trainable": true
+            },
+            {
+                "raw_label": "Shellcode",
+                "count": 1133,
+                "binary_label": "ATTACK",
+                "family_label": "UNMAPPED_ATTACK",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "Worms",
+                "count": 130,
+                "binary_label": "ATTACK",
+                "family_label": "UNMAPPED_ATTACK",
+                "stage2_trainable": false
+            }
+        ]
+    },
+    {
+        "dataset": "CSE-CIC-IDS2018 \u2014 Tuesday-20-02-2018_TrafficForML_CICFlowMeter",
+        "dataset_key": "cse_cic_ids2018",
+        "binary_counts": {
+            "BENIGN": 7372557,
+            "ATTACK": 576191
+        },
+        "family_counts": {
+            "BENIGN": 7372557,
+            "DDoS": 576191
+        },
+        "stage2_trainable_rows": 576191,
+        "unmapped_attack_rows": 0,
+        "mappings": [
+            {
+                "raw_label": "Benign",
+                "count": 7372557,
+                "binary_label": "BENIGN",
+                "family_label": "BENIGN",
+                "stage2_trainable": false
+            },
+            {
+                "raw_label": "DDoS attacks-LOIC-HTTP",
+                "count": 576191,
+                "binary_label": "ATTACK",
+                "family_label": "DDoS",
+                "stage2_trainable": true
+            }
+        ]
+    }
+]
