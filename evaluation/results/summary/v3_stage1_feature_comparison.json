@@ -1,0 +1,207 @@
+{
+    "A": {
+        "features": [
+            "flow_duration",
+            "fwd_packets",
+            "bwd_packets",
+            "fwd_bytes",
+            "bwd_bytes"
+        ],
+        "training_file": "data\\v3\\stage1_feature_set_a.csv",
+        "training_rows": 556000,
+        "training_distribution": {
+            "ATTACK": 300000,
+            "BENIGN": 256000
+        },
+        "training_seconds": 23.94794240000192,
+        "model": {
+            "type": "RandomForestClassifier",
+            "n_estimators": 200,
+            "class_weight": "balanced_subsample",
+            "random_state": 42
+        },
+        "development": {
+            "total_raw_rows": 7948748,
+            "repeated_header_rows": 0,
+            "invalid_feature_rows": 0,
+            "evaluated_rows": 7948748,
+            "evaluation_seconds": 162.63868119999825,
+            "true_distribution": {
+                "BENIGN": 7372557,
+                "ATTACK": 576191
+            },
+            "predicted_distribution": {
+                "BENIGN": 6029826,
+                "ATTACK": 1918922
+            },
+            "confusion_matrix": {
+                "labels": [
+                    "BENIGN",
+                    "ATTACK"
+                ],
+                "matrix": [
+                    [
+                        5689912,
+                        1682645
+                    ],
+                    [
+                        339914,
+                        236277
+                    ]
+                ],
+                "tn": 5689912,
+                "fp": 1682645,
+                "fn": 339914,
+                "tp": 236277
+            },
+            "accuracy": 0.7455499910174533,
+            "balanced_accuracy": 0.5909181455985995,
+            "attack_precision": 0.12313006990383142,
+            "attack_recall": 0.41006714787284076,
+            "attack_f1": 0.189391823135866,
+            "benign_recall": 0.7717691433243582,
+            "false_positive_rate": 0.22823085667564183,
+            "false_negative_rate": 0.5899328521271592
+        }
+    },
+    "B": {
+        "features": [
+            "flow_duration",
+            "fwd_packets",
+            "bwd_packets",
+            "fwd_bytes",
+            "bwd_bytes",
+            "total_packets",
+            "total_bytes",
+            "fwd_mean_packet_bytes",
+            "bwd_mean_packet_bytes"
+        ],
+        "training_file": "data\\v3\\stage1_feature_set_b.csv",
+        "training_rows": 556000,
+        "training_distribution": {
+            "ATTACK": 300000,
+            "BENIGN": 256000
+        },
+        "training_seconds": 24.98064489999524,
+        "model": {
+            "type": "RandomForestClassifier",
+            "n_estimators": 200,
+            "class_weight": "balanced_subsample",
+            "random_state": 42
+        },
+        "development": {
+            "total_raw_rows": 7948748,
+            "repeated_header_rows": 0,
+            "invalid_feature_rows": 0,
+            "evaluated_rows": 7948748,
+            "evaluation_seconds": 185.4937246000045,
+            "true_distribution": {
+                "BENIGN": 7372557,
+                "ATTACK": 576191
+            },
+            "predicted_distribution": {
+                "BENIGN": 5959957,
+                "ATTACK": 1988791
+            },
+            "confusion_matrix": {
+                "labels": [
+                    "BENIGN",
+                    "ATTACK"
+                ],
+                "matrix": [
+                    [
+                        5620027,
+                        1752530
+                    ],
+                    [
+                        339930,
+                        236261
+                    ]
+                ],
+                "tn": 5620027,
+                "fp": 1752530,
+                "fn": 339930,
+                "tp": 236261
+            },
+            "accuracy": 0.7367560274901154,
+            "balanced_accuracy": 0.5861647252205924,
+            "attack_precision": 0.1187962938287633,
+            "attack_recall": 0.4100393793030436,
+            "attack_f1": 0.18422039608854954,
+            "benign_recall": 0.7622900711381411,
+            "false_positive_rate": 0.2377099288618589,
+            "false_negative_rate": 0.5899606206969564
+        }
+    },
+    "C": {
+        "features": [
+            "flow_duration",
+            "fwd_packets",
+            "bwd_packets",
+            "fwd_bytes",
+            "bwd_bytes",
+            "total_packets",
+            "total_bytes",
+            "fwd_mean_packet_bytes",
+            "bwd_mean_packet_bytes",
+            "packets_per_second",
+            "bytes_per_second"
+        ],
+        "training_file": "data\\v3\\stage1_feature_set_c.csv",
+        "training_rows": 552196,
+        "training_distribution": {
+            "ATTACK": 299616,
+            "BENIGN": 252580
+        },
+        "training_seconds": 35.22282019999693,
+        "model": {
+            "type": "RandomForestClassifier",
+            "n_estimators": 200,
+            "class_weight": "balanced_subsample",
+            "random_state": 42
+        },
+        "development": {
+            "total_raw_rows": 7948748,
+            "repeated_header_rows": 0,
+            "invalid_feature_rows": 59453,
+            "evaluated_rows": 7889295,
+            "evaluation_seconds": 191.49704799999745,
+            "true_distribution": {
+                "BENIGN": 7313104,
+                "ATTACK": 576191
+            },
+            "predicted_distribution": {
+                "BENIGN": 6017167,
+                "ATTACK": 1872128
+            },
+            "confusion_matrix": {
+                "labels": [
+                    "BENIGN",
+                    "ATTACK"
+                ],
+                "matrix": [
+                    [
+                        5677044,
+                        1636060
+                    ],
+                    [
+                        340123,
+                        236068
+                    ]
+                ],
+                "tn": 5677044,
+                "fp": 1636060,
+                "fn": 340123,
+                "tp": 236068
+            },
+            "accuracy": 0.7495108244779793,
+            "balanced_accuracy": 0.5929940993263518,
+            "attack_precision": 0.126096078900588,
+            "attack_recall": 0.40970442092986525,
+            "attack_f1": 0.19284088388808812,
+            "benign_recall": 0.7762837777228383,
+            "false_positive_rate": 0.22371622227716165,
+            "false_negative_rate": 0.5902955790701347
+        }
+    }
+}

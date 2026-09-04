@@ -1,0 +1,116 @@
+{
+    "total_development_rows": 7948748,
+    "common_valid_rows": 7889295,
+    "excluded_rows": 59453,
+    "coverage": 0.9925204573097549,
+    "true_distribution": {
+        "BENIGN": 7313104,
+        "ATTACK": 576191
+    },
+    "feature_sets": {
+        "A": {
+            "accuracy": 0.7436469291616045,
+            "balanced_accuracy": 0.5899982209590799,
+            "attack_precision": 0.12313738529336964,
+            "attack_recall": 0.41006714787284076,
+            "attack_f1": 0.18940047671361793,
+            "benign_recall": 0.7699292940453192,
+            "false_positive_rate": 0.2300707059546808,
+            "false_negative_rate": 0.5899328521271592,
+            "confusion_matrix": {
+                "labels": [
+                    "BENIGN",
+                    "ATTACK"
+                ],
+                "matrix": [
+                    [
+                        5630573,
+                        1682531
+                    ],
+                    [
+                        339914,
+                        236277
+                    ]
+                ],
+                "tn": 5630573,
+                "fp": 1682531,
+                "fn": 339914,
+                "tp": 236277
+            }
+        },
+        "B": {
+            "accuracy": 0.7347922723133056,
+            "balanced_accuracy": 0.5852092780944046,
+            "attack_precision": 0.11880573237998163,
+            "attack_recall": 0.4100393793030436,
+            "attack_f1": 0.18423174455635163,
+            "benign_recall": 0.7603791768857656,
+            "false_positive_rate": 0.23962082311423438,
+            "false_negative_rate": 0.5899606206969564,
+            "confusion_matrix": {
+                "labels": [
+                    "BENIGN",
+                    "ATTACK"
+                ],
+                "matrix": [
+                    [
+                        5560732,
+                        1752372
+                    ],
+                    [
+                        339930,
+                        236261
+                    ]
+                ],
+                "tn": 5560732,
+                "fp": 1752372,
+                "fn": 339930,
+                "tp": 236261
+            }
+        },
+        "C": {
+            "accuracy": 0.7495108244779793,
+            "balanced_accuracy": 0.5929940993263518,
+            "attack_precision": 0.126096078900588,
+            "attack_recall": 0.40970442092986525,
+            "attack_f1": 0.19284088388808812,
+            "benign_recall": 0.7762837777228383,
+            "false_positive_rate": 0.22371622227716165,
+            "false_negative_rate": 0.5902955790701347,
+            "confusion_matrix": {
+                "labels": [
+                    "BENIGN",
+                    "ATTACK"
+                ],
+                "matrix": [
+                    [
+                        5677044,
+                        1636060
+                    ],
+                    [
+                        340123,
+                        236068
+                    ]
+                ],
+                "tn": 5677044,
+                "fp": 1636060,
+                "fn": 340123,
+                "tp": 236068
+            }
+        }
+    },
+    "training": {
+        "A": {
+            "rows": 556000,
+            "training_seconds": 23.664805100001104
+        },
+        "B": {
+            "rows": 556000,
+            "training_seconds": 30.41676770000049
+        },
+        "C": {
+            "rows": 552196,
+            "training_seconds": 34.589701100005186
+        }
+    }
+}
