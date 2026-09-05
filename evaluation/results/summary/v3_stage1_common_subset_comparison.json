@@ -9,14 +9,14 @@
     },
     "feature_sets": {
         "A": {
-            "accuracy": 0.7436469291616045,
-            "balanced_accuracy": 0.5899982209590799,
-            "attack_precision": 0.12313738529336964,
-            "attack_recall": 0.41006714787284076,
-            "attack_f1": 0.18940047671361793,
-            "benign_recall": 0.7699292940453192,
-            "false_positive_rate": 0.2300707059546808,
-            "false_negative_rate": 0.5899328521271592,
+            "accuracy": 0.8910836773121046,
+            "balanced_accuracy": 0.6504223804928193,
+            "attack_precision": 0.3000392741903583,
+            "attack_recall": 0.36859478888077046,
+            "attack_f1": 0.3308025092773951,
+            "benign_recall": 0.9322499721048682,
+            "false_positive_rate": 0.0677500278951318,
+            "false_negative_rate": 0.6314052111192295,
             "confusion_matrix": {
                 "labels": [
                     "BENIGN",
@@ -24,29 +24,29 @@
                 ],
                 "matrix": [
                     [
-                        5630573,
-                        1682531
+                        6817641,
+                        495463
                     ],
                     [
-                        339914,
-                        236277
+                        363810,
+                        212381
                     ]
                 ],
-                "tn": 5630573,
-                "fp": 1682531,
-                "fn": 339914,
-                "tp": 236277
+                "tn": 6817641,
+                "fp": 495463,
+                "fn": 363810,
+                "tp": 212381
             }
         },
         "B": {
-            "accuracy": 0.7347922723133056,
-            "balanced_accuracy": 0.5852092780944046,
-            "attack_precision": 0.11880573237998163,
-            "attack_recall": 0.4100393793030436,
-            "attack_f1": 0.18423174455635163,
-            "benign_recall": 0.7603791768857656,
-            "false_positive_rate": 0.23962082311423438,
-            "false_negative_rate": 0.5899606206969564,
+            "accuracy": 0.8833109929340961,
+            "balanced_accuracy": 0.6461754788785974,
+            "attack_precision": 0.27607931560448307,
+            "attack_recall": 0.36847677245913246,
+            "attack_f1": 0.31565543182527767,
+            "benign_recall": 0.9238741852980622,
+            "false_positive_rate": 0.07612581470193779,
+            "false_negative_rate": 0.6315232275408675,
             "confusion_matrix": {
                 "labels": [
                     "BENIGN",
@@ -54,29 +54,29 @@
                 ],
                 "matrix": [
                     [
-                        5560732,
-                        1752372
+                        6756388,
+                        556716
                     ],
                     [
-                        339930,
-                        236261
+                        363878,
+                        212313
                     ]
                 ],
-                "tn": 5560732,
-                "fp": 1752372,
-                "fn": 339930,
-                "tp": 236261
+                "tn": 6756388,
+                "fp": 556716,
+                "fn": 363878,
+                "tp": 212313
             }
         },
         "C": {
-            "accuracy": 0.7495108244779793,
-            "balanced_accuracy": 0.5929940993263518,
-            "attack_precision": 0.126096078900588,
-            "attack_recall": 0.40970442092986525,
-            "attack_f1": 0.19284088388808812,
-            "benign_recall": 0.7762837777228383,
-            "false_positive_rate": 0.22371622227716165,
-            "false_negative_rate": 0.5902955790701347,
+            "accuracy": 0.8942046152412858,
+            "balanced_accuracy": 0.6522424939538951,
+            "attack_precision": 0.31094674383086296,
+            "attack_recall": 0.3688915654704777,
+            "attack_f1": 0.33744974221177926,
+            "benign_recall": 0.9355934224373126,
+            "false_positive_rate": 0.06440657756268747,
+            "false_negative_rate": 0.6311084345295224,
             "confusion_matrix": {
                 "labels": [
                     "BENIGN",
@@ -84,33 +84,33 @@
                 ],
                 "matrix": [
                     [
-                        5677044,
-                        1636060
+                        6842092,
+                        471012
                     ],
                     [
-                        340123,
-                        236068
+                        363639,
+                        212552
                     ]
                 ],
-                "tn": 5677044,
-                "fp": 1636060,
-                "fn": 340123,
-                "tp": 236068
+                "tn": 6842092,
+                "fp": 471012,
+                "fn": 363639,
+                "tp": 212552
             }
         }
     },
     "training": {
         "A": {
             "rows": 556000,
-            "training_seconds": 23.664805100001104
+            "training_seconds": 24.8129411000009
         },
         "B": {
             "rows": 556000,
-            "training_seconds": 30.41676770000049
+            "training_seconds": 28.435826899998574
         },
         "C": {
-            "rows": 552196,
-            "training_seconds": 34.589701100005186
+            "rows": 552746,
+            "training_seconds": 37.77058510000097
         }
     }
 }

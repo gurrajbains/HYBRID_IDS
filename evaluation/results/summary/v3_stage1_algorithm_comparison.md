@@ -6,7 +6,7 @@ Three classifiers were compared using the same V3 Feature Set C training data an
 
 - Feature representation: Set C
 - Features: 11
-- Training rows: 552,196
+- Training rows: 552,746
 - Development dataset: CSE-CIC-IDS2018 Tuesday-20-02-2018
 - Final and secondary holdout datasets were not used
 - Default classifier decision thresholds were used
@@ -21,75 +21,75 @@ Three classifiers were compared using the same V3 Feature Set C training data an
 
 | Model | Accuracy | Balanced Accuracy | Attack Precision | Attack Recall | Attack F1 | Benign Recall | FPR | ROC AUC | Avg Precision | Train Sec | Rows/Sec |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| random_forest | 0.749511 | 0.592994 | 0.126096 | 0.409704 | 0.192841 | 0.776284 | 0.223716 | 0.727728 | 0.284801 | 32.73 | 81118.18 |
-| extra_trees | 0.736735 | 0.585833 | 0.119524 | 0.409118 | 0.185000 | 0.762547 | 0.237453 | 0.748093 | 0.190170 | 26.81 | 57058.59 |
-| hist_gradient_boosting | 0.935529 | 0.963033 | 0.531296 | 0.995241 | 0.692768 | 0.930824 | 0.069176 | 0.969850 | 0.638463 | 6.58 | 150376.31 |
+| random_forest | 0.894205 | 0.652242 | 0.310947 | 0.368892 | 0.337450 | 0.935593 | 0.064407 | 0.893759 | 0.455156 | 36.20 | 159660.22 |
+| extra_trees | 0.882623 | 0.645158 | 0.273671 | 0.367073 | 0.313564 | 0.923242 | 0.076758 | 0.855946 | 0.343115 | 28.39 | 94497.88 |
+| hist_gradient_boosting | 0.930373 | 0.729161 | 0.524808 | 0.493531 | 0.508689 | 0.964792 | 0.035208 | 0.970540 | 0.616453 | 6.94 | 139123.56 |
 
 ## random_forest
 
-- Accuracy: 0.749511
-- Balanced accuracy: 0.592994
-- Attack precision: 0.126096
-- Attack recall: 0.409704
-- Attack F1: 0.192841
-- Benign recall: 0.776284
-- False-positive rate: 0.223716
-- ROC AUC: 0.727728
-- Average precision: 0.284801
-- Training time: 32.73 seconds
-- Development inference time: 97.26 seconds
-- Development throughput: 81,118.18 rows/sec
+- Accuracy: 0.894205
+- Balanced accuracy: 0.652242
+- Attack precision: 0.310947
+- Attack recall: 0.368892
+- Attack F1: 0.337450
+- Benign recall: 0.935593
+- False-positive rate: 0.064407
+- ROC AUC: 0.893759
+- Average precision: 0.455156
+- Training time: 36.20 seconds
+- Development inference time: 49.41 seconds
+- Development throughput: 159,660.22 rows/sec
 
 Confusion matrix [[TN, FP], [FN, TP]]:
 
-- TN: 5,677,044
-- FP: 1,636,060
-- FN: 340,123
-- TP: 236,068
+- TN: 6,842,092
+- FP: 471,012
+- FN: 363,639
+- TP: 212,552
 
 ## extra_trees
 
-- Accuracy: 0.736735
-- Balanced accuracy: 0.585833
-- Attack precision: 0.119524
-- Attack recall: 0.409118
-- Attack F1: 0.185000
-- Benign recall: 0.762547
-- False-positive rate: 0.237453
-- ROC AUC: 0.748093
-- Average precision: 0.190170
-- Training time: 26.81 seconds
-- Development inference time: 138.27 seconds
-- Development throughput: 57,058.59 rows/sec
+- Accuracy: 0.882623
+- Balanced accuracy: 0.645158
+- Attack precision: 0.273671
+- Attack recall: 0.367073
+- Attack F1: 0.313564
+- Benign recall: 0.923242
+- False-positive rate: 0.076758
+- ROC AUC: 0.855946
+- Average precision: 0.343115
+- Training time: 28.39 seconds
+- Development inference time: 83.49 seconds
+- Development throughput: 94,497.88 rows/sec
 
 Confusion matrix [[TN, FP], [FN, TP]]:
 
-- TN: 5,576,588
-- FP: 1,736,516
-- FN: 340,461
-- TP: 235,730
+- TN: 6,751,768
+- FP: 561,336
+- FN: 364,687
+- TP: 211,504
 
 ## hist_gradient_boosting
 
-- Accuracy: 0.935529
-- Balanced accuracy: 0.963033
-- Attack precision: 0.531296
-- Attack recall: 0.995241
-- Attack F1: 0.692768
-- Benign recall: 0.930824
-- False-positive rate: 0.069176
-- ROC AUC: 0.969850
-- Average precision: 0.638463
-- Training time: 6.58 seconds
-- Development inference time: 52.46 seconds
-- Development throughput: 150,376.31 rows/sec
+- Accuracy: 0.930373
+- Balanced accuracy: 0.729161
+- Attack precision: 0.524808
+- Attack recall: 0.493531
+- Attack F1: 0.508689
+- Benign recall: 0.964792
+- False-positive rate: 0.035208
+- ROC AUC: 0.970540
+- Average precision: 0.616453
+- Training time: 6.94 seconds
+- Development inference time: 56.71 seconds
+- Development throughput: 139,123.56 rows/sec
 
 Confusion matrix [[TN, FP], [FN, TP]]:
 
-- TN: 6,807,214
-- FP: 505,890
-- FN: 2,742
-- TP: 573,449
+- TN: 7,055,621
+- FP: 257,483
+- FN: 291,823
+- TP: 284,368
 
 ## Selection Rule
 

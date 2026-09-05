@@ -13,7 +13,7 @@
             "ATTACK": 300000,
             "BENIGN": 256000
         },
-        "training_seconds": 23.94794240000192,
+        "training_seconds": 25.446239900000364,
         "model": {
             "type": "RandomForestClassifier",
             "n_estimators": 200,
@@ -25,14 +25,14 @@
             "repeated_header_rows": 0,
             "invalid_feature_rows": 0,
             "evaluated_rows": 7948748,
-            "evaluation_seconds": 162.63868119999825,
+            "evaluation_seconds": 159.63768229999914,
             "true_distribution": {
                 "BENIGN": 7372557,
                 "ATTACK": 576191
             },
             "predicted_distribution": {
-                "BENIGN": 6029826,
-                "ATTACK": 1918922
+                "BENIGN": 7240835,
+                "ATTACK": 707913
             },
             "confusion_matrix": {
                 "labels": [
@@ -41,27 +41,27 @@
                 ],
                 "matrix": [
                     [
-                        5689912,
-                        1682645
+                        6877025,
+                        495532
                     ],
                     [
-                        339914,
-                        236277
+                        363810,
+                        212381
                     ]
                 ],
-                "tn": 5689912,
-                "fp": 1682645,
-                "fn": 339914,
-                "tp": 236277
+                "tn": 6877025,
+                "fp": 495532,
+                "fn": 363810,
+                "tp": 212381
             },
-            "accuracy": 0.7455499910174533,
-            "balanced_accuracy": 0.5909181455985995,
-            "attack_precision": 0.12313006990383142,
-            "attack_recall": 0.41006714787284076,
-            "attack_f1": 0.189391823135866,
-            "benign_recall": 0.7717691433243582,
-            "false_positive_rate": 0.22823085667564183,
-            "false_negative_rate": 0.5899328521271592
+            "accuracy": 0.8918896409849703,
+            "balanced_accuracy": 0.6506908723070195,
+            "attack_precision": 0.3000100294810238,
+            "attack_recall": 0.36859478888077046,
+            "attack_f1": 0.33078473394678315,
+            "benign_recall": 0.9327869557332686,
+            "false_positive_rate": 0.06721304426673134,
+            "false_negative_rate": 0.6314052111192295
         }
     },
     "B": {
@@ -82,7 +82,7 @@
             "ATTACK": 300000,
             "BENIGN": 256000
         },
-        "training_seconds": 24.98064489999524,
+        "training_seconds": 29.89174119999734,
         "model": {
             "type": "RandomForestClassifier",
             "n_estimators": 200,
@@ -94,14 +94,14 @@
             "repeated_header_rows": 0,
             "invalid_feature_rows": 0,
             "evaluated_rows": 7948748,
-            "evaluation_seconds": 185.4937246000045,
+            "evaluation_seconds": 162.04454110000006,
             "true_distribution": {
                 "BENIGN": 7372557,
                 "ATTACK": 576191
             },
             "predicted_distribution": {
-                "BENIGN": 5959957,
-                "ATTACK": 1988791
+                "BENIGN": 7179610,
+                "ATTACK": 769138
             },
             "confusion_matrix": {
                 "labels": [
@@ -110,27 +110,27 @@
                 ],
                 "matrix": [
                     [
-                        5620027,
-                        1752530
+                        6815732,
+                        556825
                     ],
                     [
-                        339930,
-                        236261
+                        363878,
+                        212313
                     ]
                 ],
-                "tn": 5620027,
-                "fp": 1752530,
-                "fn": 339930,
-                "tp": 236261
+                "tn": 6815732,
+                "fp": 556825,
+                "fn": 363878,
+                "tp": 212313
             },
-            "accuracy": 0.7367560274901154,
-            "balanced_accuracy": 0.5861647252205924,
-            "attack_precision": 0.1187962938287633,
-            "attack_recall": 0.4100393793030436,
-            "attack_f1": 0.18422039608854954,
-            "benign_recall": 0.7622900711381411,
-            "false_positive_rate": 0.2377099288618589,
-            "false_negative_rate": 0.5899606206969564
+            "accuracy": 0.8841700604925455,
+            "balanced_accuracy": 0.6464750295000082,
+            "attack_precision": 0.2760401904469679,
+            "attack_recall": 0.36847677245913246,
+            "attack_f1": 0.31562985708328595,
+            "benign_recall": 0.924473286540884,
+            "false_positive_rate": 0.07552671345911602,
+            "false_negative_rate": 0.6315232275408675
         }
     },
     "C": {
@@ -148,12 +148,12 @@
             "bytes_per_second"
         ],
         "training_file": "data\\v3\\stage1_feature_set_c.csv",
-        "training_rows": 552196,
+        "training_rows": 552746,
         "training_distribution": {
-            "ATTACK": 299616,
-            "BENIGN": 252580
+            "ATTACK": 299937,
+            "BENIGN": 252809
         },
-        "training_seconds": 35.22282019999693,
+        "training_seconds": 30.237939200000255,
         "model": {
             "type": "RandomForestClassifier",
             "n_estimators": 200,
@@ -165,14 +165,14 @@
             "repeated_header_rows": 0,
             "invalid_feature_rows": 59453,
             "evaluated_rows": 7889295,
-            "evaluation_seconds": 191.49704799999745,
+            "evaluation_seconds": 149.4561834999986,
             "true_distribution": {
                 "BENIGN": 7313104,
                 "ATTACK": 576191
             },
             "predicted_distribution": {
-                "BENIGN": 6017167,
-                "ATTACK": 1872128
+                "BENIGN": 7205731,
+                "ATTACK": 683564
             },
             "confusion_matrix": {
                 "labels": [
@@ -181,27 +181,27 @@
                 ],
                 "matrix": [
                     [
-                        5677044,
-                        1636060
+                        6842092,
+                        471012
                     ],
                     [
-                        340123,
-                        236068
+                        363639,
+                        212552
                     ]
                 ],
-                "tn": 5677044,
-                "fp": 1636060,
-                "fn": 340123,
-                "tp": 236068
+                "tn": 6842092,
+                "fp": 471012,
+                "fn": 363639,
+                "tp": 212552
             },
-            "accuracy": 0.7495108244779793,
-            "balanced_accuracy": 0.5929940993263518,
-            "attack_precision": 0.126096078900588,
-            "attack_recall": 0.40970442092986525,
-            "attack_f1": 0.19284088388808812,
-            "benign_recall": 0.7762837777228383,
-            "false_positive_rate": 0.22371622227716165,
-            "false_negative_rate": 0.5902955790701347
+            "accuracy": 0.8942046152412858,
+            "balanced_accuracy": 0.6522424939538951,
+            "attack_precision": 0.31094674383086296,
+            "attack_recall": 0.3688915654704777,
+            "attack_f1": 0.33744974221177926,
+            "benign_recall": 0.9355934224373126,
+            "false_positive_rate": 0.06440657756268747,
+            "false_negative_rate": 0.6311084345295224
         }
     }
 }

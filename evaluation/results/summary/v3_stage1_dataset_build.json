@@ -1,6 +1,21 @@
 {
     "random_state": 42,
     "max_rows_per_dataset_class": 100000,
+    "sampling": {
+        "method": "deterministic_random_priority_top_k",
+        "scope": "each dataset and binary class",
+        "deterministic": true,
+        "uniform_without_replacement_equivalent": true,
+        "description": "Each eligible row receives an independent deterministic pseudorandom priority. The rows with the smallest priorities are retained for each dataset/class group.",
+        "group_seeds": {
+            "cicids2017|ATTACK": 6648662205381849719,
+            "cicids2017|BENIGN": 17097375970784457056,
+            "cse_cic_ids2018|ATTACK": 57965123410098330,
+            "cse_cic_ids2018|BENIGN": 10574909373927652483,
+            "unsw_nb15|ATTACK": 10533079065431615170,
+            "unsw_nb15|BENIGN": 382516078517281901
+        }
+    },
     "training_sources": {
         "cicids2017": [
             "data/cicids2017_multiclass.csv"
@@ -21,19 +36,25 @@
             "rows_observed": 3113972,
             "header_rows_removed": 0,
             "benign_observed": 2398612,
-            "attack_observed": 715360
+            "benign_sampled": 100000,
+            "attack_observed": 715360,
+            "attack_sampled": 100000
         },
         "cse_cic_ids2018": {
             "rows_observed": 4525399,
             "header_rows_removed": 26,
             "benign_observed": 2709345,
-            "attack_observed": 1816054
+            "benign_sampled": 100000,
+            "attack_observed": 1816054,
+            "attack_sampled": 100000
         },
         "unsw_nb15": {
             "rows_observed": 175341,
             "header_rows_removed": 0,
             "benign_observed": 56000,
-            "attack_observed": 119341
+            "benign_sampled": 56000,
+            "attack_observed": 119341,
+            "attack_sampled": 100000
         }
     },
     "feature_sets": {
@@ -97,16 +118,16 @@
                 "packets_per_second",
                 "bytes_per_second"
             ],
-            "rows": 552196,
-            "rows_removed_for_invalid_features": 3804,
+            "rows": 552746,
+            "rows_removed_for_invalid_features": 3254,
             "binary_distribution": {
-                "ATTACK": 299616,
-                "BENIGN": 252580
+                "ATTACK": 299937,
+                "BENIGN": 252809
             },
             "source_distribution": {
-                "cicids2017": 199994,
-                "cse_cic_ids2018": 198852,
-                "unsw_nb15": 153350
+                "cicids2017": 199993,
+                "cse_cic_ids2018": 199405,
+                "unsw_nb15": 153348
             },
             "output": "data\\v3\\stage1_feature_set_c.csv"
         }

@@ -15,78 +15,78 @@ Feature Sets A, B, and C were compared using the same Random Forest configuratio
 
 | Feature Set | Features | Training Rows | Dev Rows | Removed | Accuracy | Balanced Accuracy | Attack Precision | Attack Recall | Attack F1 | Benign Recall | FPR |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| A | 5 | 556,000 | 7,948,748 | 0 | 0.745550 | 0.590918 | 0.123130 | 0.410067 | 0.189392 | 0.771769 | 0.228231 |
-| B | 9 | 556,000 | 7,948,748 | 0 | 0.736756 | 0.586165 | 0.118796 | 0.410039 | 0.184220 | 0.762290 | 0.237710 |
-| C | 11 | 552,196 | 7,889,295 | 59,453 | 0.749511 | 0.592994 | 0.126096 | 0.409704 | 0.192841 | 0.776284 | 0.223716 |
+| A | 5 | 556,000 | 7,948,748 | 0 | 0.891890 | 0.650691 | 0.300010 | 0.368595 | 0.330785 | 0.932787 | 0.067213 |
+| B | 9 | 556,000 | 7,948,748 | 0 | 0.884170 | 0.646475 | 0.276040 | 0.368477 | 0.315630 | 0.924473 | 0.075527 |
+| C | 11 | 552,746 | 7,889,295 | 59,453 | 0.894205 | 0.652242 | 0.310947 | 0.368892 | 0.337450 | 0.935593 | 0.064407 |
 
 ## Feature Set A
 
 - Features: 5
 - Training rows: 556,000
-- Training time: 23.95 seconds
+- Training time: 25.45 seconds
 - Development rows evaluated: 7,948,748
 - Invalid development rows removed: 0
-- Accuracy: 0.745550
-- Balanced accuracy: 0.590918
-- Attack precision: 0.123130
-- Attack recall: 0.410067
-- Attack F1: 0.189392
-- Benign recall: 0.771769
-- False-positive rate: 0.228231
-- False-negative rate: 0.589933
+- Accuracy: 0.891890
+- Balanced accuracy: 0.650691
+- Attack precision: 0.300010
+- Attack recall: 0.368595
+- Attack F1: 0.330785
+- Benign recall: 0.932787
+- False-positive rate: 0.067213
+- False-negative rate: 0.631405
 
 Confusion matrix [[TN, FP], [FN, TP]]:
 
-- TN: 5,689,912
-- FP: 1,682,645
-- FN: 339,914
-- TP: 236,277
+- TN: 6,877,025
+- FP: 495,532
+- FN: 363,810
+- TP: 212,381
 
 ## Feature Set B
 
 - Features: 9
 - Training rows: 556,000
-- Training time: 24.98 seconds
+- Training time: 29.89 seconds
 - Development rows evaluated: 7,948,748
 - Invalid development rows removed: 0
-- Accuracy: 0.736756
-- Balanced accuracy: 0.586165
-- Attack precision: 0.118796
-- Attack recall: 0.410039
-- Attack F1: 0.184220
-- Benign recall: 0.762290
-- False-positive rate: 0.237710
-- False-negative rate: 0.589961
+- Accuracy: 0.884170
+- Balanced accuracy: 0.646475
+- Attack precision: 0.276040
+- Attack recall: 0.368477
+- Attack F1: 0.315630
+- Benign recall: 0.924473
+- False-positive rate: 0.075527
+- False-negative rate: 0.631523
 
 Confusion matrix [[TN, FP], [FN, TP]]:
 
-- TN: 5,620,027
-- FP: 1,752,530
-- FN: 339,930
-- TP: 236,261
+- TN: 6,815,732
+- FP: 556,825
+- FN: 363,878
+- TP: 212,313
 
 ## Feature Set C
 
 - Features: 11
-- Training rows: 552,196
-- Training time: 35.22 seconds
+- Training rows: 552,746
+- Training time: 30.24 seconds
 - Development rows evaluated: 7,889,295
 - Invalid development rows removed: 59,453
-- Accuracy: 0.749511
-- Balanced accuracy: 0.592994
-- Attack precision: 0.126096
-- Attack recall: 0.409704
-- Attack F1: 0.192841
-- Benign recall: 0.776284
-- False-positive rate: 0.223716
-- False-negative rate: 0.590296
+- Accuracy: 0.894205
+- Balanced accuracy: 0.652242
+- Attack precision: 0.310947
+- Attack recall: 0.368892
+- Attack F1: 0.337450
+- Benign recall: 0.935593
+- False-positive rate: 0.064407
+- False-negative rate: 0.631108
 
 Confusion matrix [[TN, FP], [FN, TP]]:
 
-- TN: 5,677,044
-- FP: 1,636,060
-- FN: 340,123
-- TP: 236,068
+- TN: 6,842,092
+- FP: 471,012
+- FN: 363,639
+- TP: 212,552
 
 ## Selection Note
 
