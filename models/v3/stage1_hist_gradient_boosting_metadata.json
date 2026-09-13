@@ -1,0 +1,78 @@
+{
+    "artifact": {
+        "name": "Hybrid IDS V3 Stage 1",
+        "purpose": "Binary BENIGN vs ATTACK classification",
+        "model_path": "models\\v3\\stage1_hist_gradient_boosting.joblib",
+        "model_sha256": "d37e86b78c689f63b899a7eeac3168abe42eae5c3e1f6874629e174f24e371a0",
+        "model_size_bytes": 323899,
+        "hash_file": "models\\v3\\stage1_hist_gradient_boosting.sha256",
+        "frozen_at_utc": "2026-09-13T22:09:47.968093+00:00"
+    },
+    "training": {
+        "dataset_path": "data\\v3\\stage1_feature_set_c.csv",
+        "dataset_sha256": "906726ba995e5619d7e5674ef0286d92a323b847276bcf28c8680eedd8bd4a46",
+        "rows": 552746,
+        "class_distribution": {
+            "ATTACK": 299937,
+            "BENIGN": 252809
+        },
+        "training_seconds": 6.37393709999742,
+        "random_state": 42
+    },
+    "features": {
+        "feature_set": "C",
+        "count": 11,
+        "names": [
+            "flow_duration",
+            "fwd_packets",
+            "bwd_packets",
+            "fwd_bytes",
+            "bwd_bytes",
+            "total_packets",
+            "total_bytes",
+            "fwd_mean_packet_bytes",
+            "bwd_mean_packet_bytes",
+            "packets_per_second",
+            "bytes_per_second"
+        ]
+    },
+    "model": {
+        "type": "HistGradientBoostingClassifier",
+        "learning_rate": 0.1,
+        "max_iter": 200,
+        "max_leaf_nodes": 31,
+        "balanced_sample_weights": true,
+        "random_state": 42,
+        "classes": [
+            "ATTACK",
+            "BENIGN"
+        ],
+        "attack_class_index": 0
+    },
+    "operating_point": {
+        "threshold": 0.25,
+        "selection_dataset": "Tuesday-20-02-2018 development dataset",
+        "selection_rule": "Minimize false-positive rate while preserving at least 95% attack recall",
+        "development_metrics": {
+            "attack_recall": 0.952209,
+            "attack_precision": 0.552817,
+            "attack_f1": 0.699519,
+            "benign_recall": 0.939312,
+            "false_positive_rate": 0.060688
+        }
+    },
+    "provenance": {
+        "git_commit": "44fb9d2a59260e74a66c993e7b01d54cf15b9a59",
+        "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "numpy_version": "2.5.2",
+        "pandas_version": "3.0.5",
+        "scikit_learn_version": "1.9.0",
+        "joblib_version": "1.5.3"
+    },
+    "evaluation_policy": {
+        "development_data_used_for_training": false,
+        "final_holdout_used": false,
+        "secondary_holdout_used": false,
+        "model_changes_allowed_after_freeze": false
+    }
+}
