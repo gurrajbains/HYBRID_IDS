@@ -16,8 +16,8 @@ MANIFEST_PATH = Path("evaluation/v3_split_manifest.json")
 CSE2018_DIRECTORY = Path("evaluation/datasets/CSE-CIC-IDS2018")
 UNSW_DIRECTORY = Path("evaluation/datasets/UNSW-NB15")
 
-OUTPUT_JSON = Path("evaluation/results/summary/v3_dataset_quality.json")
-OUTPUT_MARKDOWN = Path("evaluation/results/summary/v3_dataset_quality.md")
+OUTPUT_JSON = Path("evaluation/results/v3/audits/v3_dataset_quality.json")
+OUTPUT_MARKDOWN = Path("evaluation/results/v3/audits/v3_dataset_quality.md")
 
 AUDIT_ROLES = (
     "training",

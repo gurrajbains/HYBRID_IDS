@@ -42,12 +42,12 @@ DEVELOPMENT_PATH = Path(
 )
 
 OUTPUT_JSON = Path(
-    "evaluation/results/summary/"
+    "evaluation/results/v3/stage1/"
     "v3_stage1_algorithm_comparison.json"
 )
 
 OUTPUT_MARKDOWN = Path(
-    "evaluation/results/summary/"
+    "evaluation/results/v3/stage1/"
     "v3_stage1_algorithm_comparison.md"
 )
 

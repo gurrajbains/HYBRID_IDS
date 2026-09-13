@@ -623,7 +623,7 @@ def main():
 
     report_path = (
         Path(
-            "evaluation/results/summary"
+            "evaluation/results/v3/stage1"
         )
         / "v3_stage1_dataset_build.json"
     )

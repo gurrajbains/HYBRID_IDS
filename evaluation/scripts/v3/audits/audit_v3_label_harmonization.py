@@ -5,10 +5,10 @@ import json
 from src.ml.v3.label_schema import BENIGN, UNMAPPED_ATTACK, get_binary_label, get_family_label, is_stage2_trainable
 
 
-INPUT_PATH = Path("evaluation/results/summary/v3_dataset_quality.json")
+INPUT_PATH = Path("evaluation/results/v3/audits/v3_dataset_quality.json")
 
-OUTPUT_JSON = Path("evaluation/results/summary/v3_label_harmonization.json")
-OUTPUT_MARKDOWN = Path("evaluation/results/summary/v3_label_harmonization.md")
+OUTPUT_JSON = Path("evaluation/results/v3/audits/v3_label_harmonization.json")
+OUTPUT_MARKDOWN = Path("evaluation/results/v3/audits/v3_label_harmonization.md")
 
 
 def audit_dataset(dataset):

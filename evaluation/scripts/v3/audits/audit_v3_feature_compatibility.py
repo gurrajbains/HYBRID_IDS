@@ -12,8 +12,8 @@ CSE2018_DIRECTORY = Path("evaluation/datasets/CSE-CIC-IDS2018")
 
 UNSW_PATH = Path("evaluation/datasets/UNSW-NB15/UNSW_NB15_testing-set.csv")
 
-OUTPUT_JSON = Path("evaluation/results/summary/v3_feature_compatibility.json")
-OUTPUT_MARKDOWN = Path("evaluation/results/summary/v3_feature_compatibility.md")
+OUTPUT_JSON = Path("evaluation/results/v3/audits/v3_feature_compatibility.json")
+OUTPUT_MARKDOWN = Path("evaluation/results/v3/audits/v3_feature_compatibility.md")
 
 
 def normalize_columns(columns):

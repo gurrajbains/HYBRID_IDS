@@ -11,7 +11,7 @@ CIC17_PATH = Path("data/cicids2017_multiclass.csv")
 CSE2018_DIRECTORY = Path("evaluation/datasets/CSE-CIC-IDS2018")
 UNSW_PATH = Path("evaluation/datasets/UNSW-NB15/UNSW_NB15_testing-set.csv")
 
-OUTPUT_PATH = Path("evaluation/results/summary/v3_common_feature_profile.md")
+OUTPUT_PATH = Path("evaluation/results/v3/audits/v3_common_feature_profile.md")
 
 SAMPLE_ROWS = 100_000
 
