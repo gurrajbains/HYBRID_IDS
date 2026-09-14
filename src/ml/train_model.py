@@ -9,8 +9,8 @@ from src.ml.preprocess import load_dataset, clean_dataset
 
 
 DATASET_PATH = "data/cicids2017.csv"
-MODEL_PATH = "models/random_forest_ids.joblib"
-FEATURES_PATH = "models/feature_names.json"
+MODEL_PATH = "models/legacy/binary_portscan/random_forest_ids.joblib"
+FEATURES_PATH = "models/legacy/binary_portscan/feature_names.json"
 
 
 def prepare_data(data):
@@ -97,7 +97,7 @@ def train_model():
 
     with open(FEATURES_PATH, "w", encoding="utf-8") as feature_file:
         json.dump(X.columns.tolist(), feature_file, indent=4)
-    with open("models/evaluation_metrics.json", "w", encoding="utf-8") as metrics_file:
+    with open("models/legacy/binary_portscan/metrics.json", "w", encoding="utf-8") as metrics_file:
         json.dump(metrics, metrics_file, indent=4)
     print(f"\nModel saved to: {MODEL_PATH}")
     print(f"Feature list saved to: {FEATURES_PATH}")

@@ -3,7 +3,7 @@ import json
 from src.flow.flow_tracker import FlowTracker
 
 
-FEATURES_PATH = "models/multiclass_feature_names.json"
+FEATURES_PATH = "models/legacy/multiclass_78/feature_names.json"
 
 
 def get_generated_features():

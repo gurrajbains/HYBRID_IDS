@@ -7,9 +7,9 @@ from sklearn.model_selection import train_test_split
 
 
 DATASET_PATH = "data/cicids2017_multiclass.csv"
-MODEL_PATH = "models/random_forest_multiclass.joblib"
-FEATURES_PATH = "models/multiclass_feature_names.json"
-METRICS_PATH = "models/multiclass_evaluation_metrics.json"
+MODEL_PATH = "models/legacy/multiclass_78/random_forest_multiclass.joblib"
+FEATURES_PATH = "models/legacy/multiclass_78/feature_names.json"
+METRICS_PATH = "models/legacy/multiclass_78/metrics.json"
 
 MAX_SAMPLES_PER_CLASS = 250000
 
