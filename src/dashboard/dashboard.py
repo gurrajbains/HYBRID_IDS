@@ -17,8 +17,8 @@ METRICS_PATH = "logs/metrics.json"
 ALERTS_PATH = "logs/alerts.jsonl"
 FLOW_LOG_PATH = "logs/flows.jsonl"
 PREDICTION_LOG_PATH = "logs/ml_predictions.jsonl"
-MODEL_METRICS_PATH = "models/live_model_metrics.json"
-MODEL_PATH = "models/random_forest_live.joblib"
+MODEL_METRICS_PATH = "models/v1/metrics.json"
+MODEL_PATH = "models/v1/random_forest_live.joblib"
 
 
 # =========================================================

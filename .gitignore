@@ -7,7 +7,7 @@ data/
 logs/
 
 models/*.joblib
-
+models/**/*.joblib
 pcaps/*.pcap
 pcaps/*.pcapng
 

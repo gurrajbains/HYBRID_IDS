@@ -8,8 +8,8 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 
 DATASET_PATH = Path("evaluation/datasets/CSE-CIC-IDS2018/Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv")
-MODEL_PATH = Path("models/random_forest_live_v2e.joblib")
-FEATURES_PATH = Path("models/live_feature_names.json")
+MODEL_PATH = Path("models/v2/final/random_forest_live_v2e.joblib")
+FEATURES_PATH = Path("models/v2/final/feature_names.json")
 
 
 COLUMN_MAP = {

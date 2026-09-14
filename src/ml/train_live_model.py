@@ -8,9 +8,9 @@ from sklearn.model_selection import train_test_split
 
 
 DATASET_PATH = "data/cicids2017_multiclass.csv"
-MODEL_PATH = "models/random_forest_live.joblib"
-FEATURES_PATH = "models/live_feature_names.json"
-METRICS_PATH = "models/live_model_metrics.json"
+MODEL_PATH = "models/v1/random_forest_live.joblib"
+FEATURES_PATH = "models/v1/feature_names.json"
+METRICS_PATH = "models/v1/metrics.json"
 
 MAX_SAMPLES_PER_CLASS = 250000
 

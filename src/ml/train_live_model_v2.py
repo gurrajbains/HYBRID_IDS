@@ -11,9 +11,9 @@ from sklearn.model_selection import train_test_split
 
 
 DATASET_PATH = Path("data/cicids2017_multiclass.csv")
-MODEL_PATH = Path("models/random_forest_live_v2.joblib")
-FEATURES_PATH = Path("models/live_feature_names_v2.json")
-METRICS_PATH = Path("models/live_model_metrics_v2.json")
+MODEL_PATH = Path("models/v2/final/random_forest_live_v2e.joblib")
+FEATURES_PATH = Path("models/v2/final/feature_names.json")
+METRICS_PATH = Path("models/v2/final/metrics.json")
 MAX_SAMPLES_PER_CLASS = 250000
 
 

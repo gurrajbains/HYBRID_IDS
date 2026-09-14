@@ -800,9 +800,9 @@ Because of this overall balance, V2-E was selected as the official V2 candidate.
 
 The official V2 model files are:
 
-- `models/random_forest_live_v2.joblib`
-- `models/live_feature_names_v2.json`
-- `models/live_model_metrics_v2.json`
+- `models/v2/final/random_forest_live_v2e.joblib`
+- `models/v2/final/feature_names.json`
+- `models/v2/final/metrics.json`
 
 The original V2-E candidate artifacts were also preserved separately.
 
@@ -858,7 +858,7 @@ Total benign samples:
 
 The frozen model used for this evaluation was:
 
-`models/random_forest_live_v2.joblib`
+`models/v2/final/random_forest_live_v2e.joblib`
 
 No retraining was performed using this dataset.
 

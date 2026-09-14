@@ -5,7 +5,7 @@ import pandas as pd
 
 
 DATASET_PATH = Path("evaluation/datasets/CSE-CIC-IDS2018/Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv")
-FEATURES_PATH = Path("models/live_feature_names.json")
+FEATURES_PATH = Path("models/v1/feature_names.json")
 
 
 COLUMN_MAP = {

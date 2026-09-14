@@ -3,8 +3,8 @@ import joblib
 import pandas as pd
 
 
-MODEL_PATH = "models/random_forest_live.joblib"
-FEATURES_PATH = "models/live_feature_names.json"
+MODEL_PATH = "models/v1/random_forest_live.joblib"
+FEATURES_PATH = "models/v1/feature_names.json"
 
 
 class LiveMLDetector:
