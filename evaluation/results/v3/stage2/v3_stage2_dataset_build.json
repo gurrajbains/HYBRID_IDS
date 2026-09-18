@@ -1,0 +1,211 @@
+{
+    "version": "V3",
+    "stage": "Stage 2 attack-family dataset",
+    "feature_set": "C",
+    "features": [
+        "flow_duration",
+        "fwd_packets",
+        "bwd_packets",
+        "fwd_bytes",
+        "bwd_bytes",
+        "total_packets",
+        "total_bytes",
+        "fwd_mean_packet_bytes",
+        "bwd_mean_packet_bytes",
+        "packets_per_second",
+        "bytes_per_second"
+    ],
+    "manifest": {
+        "path": "evaluation\\v3_split_manifest.json",
+        "sha256": "4de437046ed8cecf7fdbd6a55882b10a91af988878e361cde251ab2097b491e4",
+        "partition_used": "training"
+    },
+    "sampling": {
+        "method": "deterministic_random_priority_top_k",
+        "random_state": 42,
+        "max_rows_per_dataset_family": 100000,
+        "grouping": "source_dataset x family_label"
+    },
+    "policy": {
+        "benign_rows_in_stage2_training": false,
+        "unmapped_attack_rows_in_stage2_training": false,
+        "development_data_used": false,
+        "final_holdout_data_used": false,
+        "secondary_holdout_data_used": false,
+        "missing_features_fabricated": false
+    },
+    "totals": {
+        "raw_rows": 7814738,
+        "rows_after_header_cleanup": 7814712,
+        "attack_rows": 2650755,
+        "mapped_attack_rows": 2554169,
+        "unmapped_attack_rows": 96586,
+        "invalid_feature_rows": 677,
+        "valid_mapped_attack_rows": 2553492,
+        "sampled_rows": 733151
+    },
+    "mapped_family_counts_before_feature_validation": {
+        "Bot": 1956,
+        "BruteForce": 394781,
+        "DDoS": 815767,
+        "DoS": 918287,
+        "Infiltration": 93099,
+        "Reconnaissance": 328099,
+        "WebAttack": 2180
+    },
+    "valid_family_counts": {
+        "Bot": 1956,
+        "BruteForce": 394775,
+        "DDoS": 815767,
+        "DoS": 918279,
+        "Infiltration": 92439,
+        "Reconnaissance": 328096,
+        "WebAttack": 2180
+    },
+    "sampled_family_counts": {
+        "Bot": 1956,
+        "BruteForce": 113832,
+        "DDoS": 200000,
+        "DoS": 212256,
+        "Infiltration": 92439,
+        "Reconnaissance": 110488,
+        "WebAttack": 2180
+    },
+    "observed_dataset_family_counts": {
+        "cicids2017": {
+            "Bot": 1956,
+            "BruteForce": 13832,
+            "DDoS": 128025,
+            "DoS": 251723,
+            "Infiltration": 36,
+            "Reconnaissance": 317608,
+            "WebAttack": 2180
+        },
+        "cse_cic_ids2018": {
+            "BruteForce": 380949,
+            "DDoS": 687742,
+            "DoS": 654300,
+            "Infiltration": 93063
+        },
+        "unsw_nb15": {
+            "DoS": 12264,
+            "Reconnaissance": 10491
+        }
+    },
+    "sampled_dataset_family_counts": {
+        "cicids2017": {
+            "Bot": 1956,
+            "BruteForce": 13832,
+            "DDoS": 100000,
+            "DoS": 100000,
+            "Infiltration": 36,
+            "Reconnaissance": 100000,
+            "WebAttack": 2180
+        },
+        "cse_cic_ids2018": {
+            "BruteForce": 100000,
+            "DDoS": 100000,
+            "DoS": 100000,
+            "Infiltration": 92403
+        },
+        "unsw_nb15": {
+            "DoS": 12256,
+            "Reconnaissance": 10488
+        }
+    },
+    "unmapped_attack_raw_labels": {
+        "unsw_nb15": {
+            "Analysis": 2000,
+            "Backdoor": 1746,
+            "Exploits": 33393,
+            "Fuzzers": 18184,
+            "Generic": 40000,
+            "Shellcode": 1133,
+            "Worms": 130
+        }
+    },
+    "source_files": [
+        {
+            "dataset": "cicids2017",
+            "file": "data\\cicids2017_multiclass.csv",
+            "raw_rows": 3113972,
+            "rows_after_header_cleanup": 3113972,
+            "attack_rows": 715360,
+            "mapped_attack_rows": 715360,
+            "unmapped_attack_rows": 0,
+            "invalid_feature_rows": 0,
+            "valid_mapped_attack_rows": 715360
+        },
+        {
+            "dataset": "cse_cic_ids2018",
+            "file": "evaluation\\datasets\\CSE-CIC-IDS2018\\Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv",
+            "raw_rows": 1048575,
+            "rows_after_header_cleanup": 1048575,
+            "attack_rows": 380949,
+            "mapped_attack_rows": 380949,
+            "unmapped_attack_rows": 0,
+            "invalid_feature_rows": 6,
+            "valid_mapped_attack_rows": 380943
+        },
+        {
+            "dataset": "cse_cic_ids2018",
+            "file": "evaluation\\datasets\\CSE-CIC-IDS2018\\Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv",
+            "raw_rows": 1048575,
+            "rows_after_header_cleanup": 1048575,
+            "attack_rows": 52498,
+            "mapped_attack_rows": 52498,
+            "unmapped_attack_rows": 0,
+            "invalid_feature_rows": 0,
+            "valid_mapped_attack_rows": 52498
+        },
+        {
+            "dataset": "cse_cic_ids2018",
+            "file": "evaluation\\datasets\\CSE-CIC-IDS2018\\Friday-16-02-2018_TrafficForML_CICFlowMeter.csv",
+            "raw_rows": 1048575,
+            "rows_after_header_cleanup": 1048574,
+            "attack_rows": 601802,
+            "mapped_attack_rows": 601802,
+            "unmapped_attack_rows": 0,
+            "invalid_feature_rows": 0,
+            "valid_mapped_attack_rows": 601802
+        },
+        {
+            "dataset": "cse_cic_ids2018",
+            "file": "evaluation\\datasets\\CSE-CIC-IDS2018\\Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv",
+            "raw_rows": 1048575,
+            "rows_after_header_cleanup": 1048575,
+            "attack_rows": 687742,
+            "mapped_attack_rows": 687742,
+            "unmapped_attack_rows": 0,
+            "invalid_feature_rows": 0,
+            "valid_mapped_attack_rows": 687742
+        },
+        {
+            "dataset": "cse_cic_ids2018",
+            "file": "evaluation\\datasets\\CSE-CIC-IDS2018\\Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv",
+            "raw_rows": 331125,
+            "rows_after_header_cleanup": 331100,
+            "attack_rows": 93063,
+            "mapped_attack_rows": 93063,
+            "unmapped_attack_rows": 0,
+            "invalid_feature_rows": 660,
+            "valid_mapped_attack_rows": 92403
+        },
+        {
+            "dataset": "unsw_nb15",
+            "file": "evaluation\\datasets\\UNSW-NB15\\UNSW_NB15_training-set.csv",
+            "raw_rows": 175341,
+            "rows_after_header_cleanup": 175341,
+            "attack_rows": 119341,
+            "mapped_attack_rows": 22755,
+            "unmapped_attack_rows": 96586,
+            "invalid_feature_rows": 11,
+            "valid_mapped_attack_rows": 22744
+        }
+    ],
+    "output": {
+        "dataset": "data\\v3\\stage2_feature_set_c.csv",
+        "report_json": "evaluation\\results\\v3\\stage2\\v3_stage2_dataset_build.json",
+        "report_markdown": "evaluation\\results\\v3\\stage2\\v3_stage2_dataset_build.md"
+    }
+}
